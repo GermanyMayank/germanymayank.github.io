@@ -3,38 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mayank Vekariya | Project Portfolio</title>
-  <meta name="description" content="Project portfolio focused on project delivery, coordination, systems thinking, and engineering execution." />
+  <title>Mayank Vekariya | Product Management & Business Development</title>
+  <meta name="description" content="Product management and business development portfolio focused on market intelligence, product strategy, partner enablement, technical-commercial storytelling, and AI-assisted execution." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%230a7f73'/%3E%3Cpath d='M14 42V18h8l10 13 10-13h8v24h-8V29L32 42 22 29v13z' fill='white'/%3E%3C/svg%3E" />
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: #111831;
-      --panel-2: #17203d;
-      --text: #edf2ff;
-      --muted: #b2bddb;
-      --line: rgba(255,255,255,0.08);
-      --accent: #7cc7ff;
-      --accent-2: #8ef0d6;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
-      --radius: 22px;
-      --max: 1240px;
+      --ink: #17201c;
+      --paper: #f7f8f3;
+      --paper-2: #ecefe7;
+      --line: #cfd7cb;
+      --muted: #5d6961;
+      --teal: #0a7f73;
+      --teal-dark: #075d55;
+      --amber: #d89b24;
+      --steel: #486176;
+      --coral: #c95b4a;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(23, 32, 28, 0.12);
+      --max: 1180px;
+      --radius: 8px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(124,199,255,0.12), transparent 28%),
-        radial-gradient(circle at top right, rgba(142,240,214,0.10), transparent 22%),
-        linear-gradient(180deg, #0a1020 0%, #0b1020 100%);
+        linear-gradient(90deg, rgba(10, 127, 115, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(72, 97, 118, 0.05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 42px 42px;
       line-height: 1.55;
     }
 
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    button { font: inherit; }
 
     .container {
       width: min(var(--max), calc(100% - 32px));
@@ -44,184 +51,602 @@
     .nav {
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 50;
+      border-bottom: 1px solid rgba(23, 32, 28, 0.12);
+      background: rgba(247, 248, 243, 0.9);
       backdrop-filter: blur(14px);
-      background: rgba(11,16,32,0.72);
-      border-bottom: 1px solid var(--line);
     }
 
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      min-height: 72px;
       gap: 18px;
-      padding: 16px 0;
     }
 
     .brand {
+      display: inline-grid;
+      gap: 1px;
       font-weight: 800;
-      letter-spacing: 0.03em;
-      font-size: 1.05rem;
+      line-height: 1.1;
+    }
+
+    .brand span {
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+      align-items: center;
+      gap: 6px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+      font-weight: 700;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--text); }
+    .nav-links a {
+      flex: 0 0 auto;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+    }
+
+    .nav-links a:hover { background: rgba(10, 127, 115, 0.08); color: var(--ink); }
 
     .hero {
-      padding: 84px 0 36px;
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 58px 0 42px;
+      position: relative;
+      overflow: hidden;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-card,
-    .summary-card,
-    .project-card,
-    .filter-card,
-    .about-card,
-    .footer-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 34px;
-      min-height: 340px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
+      gap: 34px;
+      align-items: center;
     }
 
     .eyebrow {
       display: inline-flex;
-      width: fit-content;
-      padding: 8px 12px;
-      border: 1px solid rgba(124,199,255,0.22);
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.84rem;
-      letter-spacing: 0.02em;
-      background: rgba(124,199,255,0.08);
-      margin-bottom: 18px;
+      align-items: center;
+      gap: 8px;
+      color: var(--teal-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--amber);
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(2.1rem, 5vw, 4.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-    }
-
-    .hero h1 span {
-      color: var(--accent);
+      margin: 18px 0 0;
+      max-width: 880px;
+      font-size: clamp(2.55rem, 7vw, 6.7rem);
+      line-height: 0.9;
+      letter-spacing: 0;
     }
 
     .lead {
-      margin: 18px 0 0;
-      color: var(--muted);
+      margin: 24px 0 0;
       max-width: 760px;
-      font-size: 1.02rem;
+      color: var(--muted);
+      font-size: clamp(1.02rem, 1.8vw, 1.22rem);
     }
 
-    .hero-actions {
+    .hero-actions,
+    .button-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 24px;
+      margin-top: 28px;
     }
 
     .btn {
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      font-weight: 600;
+      gap: 10px;
+      padding: 0 17px;
+      border: 1px solid rgba(23, 32, 28, 0.18);
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 850;
       cursor: pointer;
-      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      box-shadow: 0 8px 20px rgba(23, 32, 28, 0.07);
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 14px 24px rgba(23, 32, 28, 0.12);
     }
 
     .btn.primary {
-      background: linear-gradient(135deg, rgba(124,199,255,0.20), rgba(142,240,214,0.18));
-      border-color: rgba(124,199,255,0.22);
+      color: white;
+      background: var(--teal);
+      border-color: var(--teal);
     }
 
-    .summary-card {
-      padding: 26px;
+    .btn.ghost {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .mission-panel {
+      position: relative;
+      min-height: 560px;
+      border: 1px solid rgba(23, 32, 28, 0.18);
+      border-radius: var(--radius);
+      background: #18211d;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      color: #eaf1e9;
+    }
+
+    .mission-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, black, transparent 90%);
+      pointer-events: none;
+    }
+
+    #missionCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .panel-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      font-weight: 850;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      color: #d8fff6;
+      border: 1px solid rgba(141, 239, 214, 0.28);
+      border-radius: var(--radius);
+      background: rgba(10, 127, 115, 0.18);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #8defd6;
+      box-shadow: 0 0 0 0 rgba(141, 239, 214, 0.65);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      70% { box-shadow: 0 0 0 12px rgba(141, 239, 214, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(141, 239, 214, 0); }
+    }
+
+    .tech-river {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 70px;
+      z-index: 2;
+      display: grid;
+      gap: 8px;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+      pointer-events: none;
+    }
+
+    .tech-track {
+      display: flex;
+      width: max-content;
+      gap: 8px;
+      animation: drift 24s linear infinite;
+    }
+
+    .tech-track:nth-child(2) {
+      animation-duration: 30s;
+      animation-direction: reverse;
+      opacity: 0.82;
+    }
+
+    .tech-track span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid rgba(141, 239, 214, 0.22);
+      border-radius: var(--radius);
+      background: rgba(24, 33, 29, 0.64);
+      color: #eaf1e9;
+      font-size: 0.76rem;
+      font-weight: 850;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .mission-copy {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      background: rgba(24, 33, 29, 0.78);
+      backdrop-filter: blur(12px);
+    }
+
+    .mission-copy h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      line-height: 1.02;
+      max-width: 440px;
+    }
+
+    .mission-copy p {
+      margin: 0;
+      max-width: 460px;
+      color: #bdc9c0;
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .signal {
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .signal strong {
+      display: block;
+      font-size: 1.15rem;
+      color: white;
+    }
+
+    .signal span {
+      color: #bdc9c0;
+      font-size: 0.78rem;
+    }
+
+    .tool-wall {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(23, 32, 28, 0.14);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.64)),
+        var(--paper-2);
+      box-shadow: var(--shadow);
+    }
+
+    .tool-wall::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(10, 127, 115, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(10, 127, 115, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      pointer-events: none;
+    }
+
+    .tool-story {
+      position: relative;
+      z-index: 2;
+      padding: 28px 28px 8px;
+    }
+
+    .tool-story .label {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tool-story h2 {
+      max-width: 480px;
+      font-size: clamp(1.85rem, 3.2vw, 3rem);
+      line-height: 0.98;
+    }
+
+    .tool-story p {
+      max-width: 500px;
+      margin: 16px 0 0;
+      color: var(--muted);
+    }
+
+    .logo-marquee {
+      position: relative;
+      z-index: 2;
       display: grid;
       gap: 14px;
-      align-content: center;
+      padding: 12px 0 28px;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
     }
 
-    .metric {
-      padding: 16px 18px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,255,255,0.02);
+    .logo-track {
+      display: flex;
+      width: max-content;
+      gap: 14px;
+      padding-inline: 14px;
+      animation: logoDrift 34s linear infinite;
     }
 
-    .metric .label {
-      font-size: 0.84rem;
+    .logo-track:nth-child(2) {
+      animation-duration: 42s;
+      animation-direction: reverse;
+    }
+
+    .logo-card {
+      width: 168px;
+      height: 88px;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid rgba(23, 32, 28, 0.1);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: 0 12px 26px rgba(23, 32, 28, 0.08);
+    }
+
+    .logo-card img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .logo-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.95rem;
+      line-height: 1.08;
+    }
+
+    .logo-card span {
+      display: block;
+      margin-top: 2px;
       color: var(--muted);
-      margin-bottom: 4px;
+      font-size: 0.72rem;
+      font-weight: 750;
     }
 
-    .metric .value {
-      font-size: 1.4rem;
-      font-weight: 800;
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      color: white;
+      border-radius: var(--radius);
+      background: var(--teal);
+      font-weight: 900;
+      font-size: 0.78rem;
+    }
+
+    .tool-footnote {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 28px 28px;
+    }
+
+    .tool-footnote span {
+      padding: 8px 10px;
+      border: 1px solid rgba(10, 127, 115, 0.15);
+      border-radius: var(--radius);
+      background: rgba(10, 127, 115, 0.07);
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    @keyframes logoDrift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .proof-strip {
+      padding: 20px 0 52px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .proof {
+      min-height: 132px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(23, 32, 28, 0.06);
+    }
+
+    .proof strong {
+      display: block;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1;
+      color: var(--teal-dark);
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.9rem;
     }
 
     section {
-      padding: 22px 0 10px;
+      padding: 64px 0;
+      border-top: 1px solid rgba(23, 32, 28, 0.1);
     }
 
     .section-head {
-      display: flex;
+      display: grid;
+      grid-template-columns: 0.7fr 1fr;
+      gap: 24px;
       align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--teal-dark);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
     }
 
     h2 {
       margin: 0;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      letter-spacing: -0.03em;
+      font-size: clamp(2rem, 4.2vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: 0;
     }
 
     .section-copy {
-      margin: 8px 0 0;
+      margin: 0;
       color: var(--muted);
-      max-width: 760px;
+      font-size: 1.02rem;
+      max-width: 740px;
     }
 
-    .filter-card {
-      padding: 16px;
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .capability {
+      padding: 20px;
+      min-height: 230px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(23, 32, 28, 0.14);
+      background: var(--white);
+      box-shadow: 0 14px 30px rgba(23, 32, 28, 0.06);
+    }
+
+    .capability .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: white;
+      border-radius: var(--radius);
+      background: var(--teal);
+    }
+
+    .capability:nth-child(2) .icon { background: var(--steel); }
+    .capability:nth-child(3) .icon { background: var(--amber); color: var(--ink); }
+    .capability:nth-child(4) .icon { background: var(--coral); }
+
+    .capability h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.16;
+    }
+
+    .capability p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.72);
+    }
+
+    .timeline-date {
+      color: var(--teal-dark);
+      font-weight: 900;
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -229,394 +654,422 @@
     }
 
     .chip {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid rgba(23, 32, 28, 0.18);
+      border-radius: var(--radius);
+      background: var(--white);
       color: var(--muted);
-      padding: 10px 14px;
-      border-radius: 999px;
+      font-weight: 850;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 160ms ease;
     }
 
-    .chip:hover,
-    .chip.active {
-      color: var(--text);
-      border-color: rgba(124,199,255,0.28);
-      background: rgba(124,199,255,0.10);
+    .chip.active,
+    .chip:hover {
+      color: white;
+      background: var(--ink);
+      border-color: var(--ink);
     }
 
-    .project-grid {
+    .case-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
+      gap: 16px;
     }
 
-    .project-card {
+    .case-card {
       grid-column: span 6;
+      display: grid;
+      grid-template-columns: 0.9fr 1fr;
+      min-height: 340px;
+      border: 1px solid rgba(23, 32, 28, 0.14);
+      border-radius: var(--radius);
       overflow: hidden;
-      position: relative;
+      background: var(--white);
+      box-shadow: 0 18px 36px rgba(23, 32, 28, 0.08);
       cursor: pointer;
-      transition: transform 220ms ease, border-color 220ms ease;
-      min-height: 470px;
+      transition: transform 180ms ease, box-shadow 180ms ease;
     }
 
-    .project-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(124,199,255,0.18);
+    .case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 50px rgba(23, 32, 28, 0.13);
     }
 
-    .project-image-wrap {
+    .case-media {
       position: relative;
-      height: 100%;
-      min-height: 470px;
+      min-height: 100%;
+      background: var(--paper-2);
       overflow: hidden;
     }
 
-    .project-image {
+    .case-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.01);
-      transition: transform 280ms ease;
+      filter: saturate(0.95) contrast(1.04);
+      transition: transform 300ms ease;
     }
 
-    .project-card:hover .project-image {
-      transform: scale(1.06);
-    }
+    .case-card:hover .case-media img { transform: scale(1.05); }
 
-    .project-gradient {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(8,11,24,0.08) 0%, rgba(8,11,24,0.18) 34%, rgba(8,11,24,0.88) 100%);
-      pointer-events: none;
-    }
-
-    .project-content {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 26px;
-      z-index: 2;
-    }
-
-    .project-type {
-      display: inline-flex;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(124,199,255,0.12);
-      border: 1px solid rgba(124,199,255,0.18);
-      border-radius: 999px;
-      padding: 8px 10px;
-      margin-bottom: 12px;
-    }
-
-    .project-title {
-      margin: 0 0 10px;
-      font-size: 1.7rem;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-
-    .project-summary {
-      margin: 0;
-      color: #d2daef;
-      max-width: 90%;
-    }
-
-    .project-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .specs-preview {
+    .case-visual {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
       display: grid;
-      gap: 8px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 220ms ease;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 24% 24%, rgba(10, 127, 115, 0.2), transparent 24%),
+        radial-gradient(circle at 76% 68%, rgba(216, 155, 36, 0.22), transparent 24%),
+        linear-gradient(135deg, #eef4ed, #dce7e2);
     }
 
-    .project-card:hover .specs-preview {
-      opacity: 1;
-      transform: translateY(0);
+    .case-visual span {
+      display: grid;
+      place-items: center;
+      width: min(150px, 70%);
+      aspect-ratio: 1;
+      border: 1px solid rgba(10, 127, 115, 0.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: var(--teal-dark);
+      font-size: 2.5rem;
+      font-weight: 950;
+      box-shadow: 0 18px 40px rgba(23, 32, 28, 0.12);
     }
 
-    .specs-preview span {
-      display: inline-flex;
-      width: fit-content;
-      font-size: 0.85rem;
-      color: var(--text);
+    .case-tag {
+      position: absolute;
+      left: 12px;
+      top: 12px;
       padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(7,10,20,0.42);
+      color: white;
+      background: rgba(23, 32, 28, 0.74);
+      border-radius: var(--radius);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       backdrop-filter: blur(8px);
     }
 
-    .open-hint {
-      color: #eef5ff;
-      font-weight: 700;
-      white-space: nowrap;
+    .case-body {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
     }
 
-    .about-grid {
+    .case-body h3 {
+      margin: 0;
+      font-size: 1.45rem;
+      line-height: 1.08;
+    }
+
+    .case-body p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .case-meta span {
+      padding: 7px 9px;
+      color: var(--teal-dark);
+      background: rgba(10, 127, 115, 0.08);
+      border: 1px solid rgba(10, 127, 115, 0.16);
+      border-radius: var(--radius);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .open-case {
+      margin-top: auto;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .skills-board {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      margin-top: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
-    .about-card {
-      padding: 24px;
+    .skill-column {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      overflow: hidden;
     }
 
-    .about-card h3 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 1.15rem;
+    .skill-column h3 {
+      margin: 0;
+      padding: 16px;
+      color: white;
+      background: var(--ink);
+      font-size: 1rem;
     }
 
-    .list {
+    .skill-column:nth-child(2) h3 { background: var(--teal-dark); }
+    .skill-column:nth-child(3) h3 { background: var(--steel); }
+    .skill-column:nth-child(4) h3 { background: var(--coral); }
+
+    .skill-column ul {
+      margin: 0;
+      padding: 16px 18px 18px;
       display: grid;
       gap: 10px;
       color: var(--muted);
+      list-style: none;
     }
 
-    .list strong { color: var(--text); }
-
-    .footer {
-      padding: 30px 0 48px;
+    .skill-column li::before {
+      content: "/";
+      margin-right: 8px;
+      color: var(--amber);
+      font-weight: 900;
     }
 
-    .footer-card {
-      padding: 22px;
-      display: flex;
+    .contact-band {
+      padding: 52px 0;
+      background: var(--ink);
+      color: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      color: var(--muted);
+    }
+
+    .contact-grid h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+    }
+
+    .contact-grid p {
+      margin: 16px 0 0;
+      color: #c6d0c8;
+      max-width: 720px;
+    }
+
+    .contact-grid .btn {
+      background: white;
+      color: var(--ink);
     }
 
     .modal {
       position: fixed;
       inset: 0;
+      z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 18px;
-      background: rgba(3,6,17,0.72);
-      backdrop-filter: blur(12px);
-      z-index: 60;
+      background: rgba(23, 32, 28, 0.7);
+      backdrop-filter: blur(10px);
     }
 
     .modal.open { display: flex; }
 
     .modal-panel {
-      width: min(1120px, 100%);
+      width: min(1060px, 100%);
       max-height: calc(100vh - 36px);
       overflow: auto;
-      background: linear-gradient(180deg, #111831, #0f1730);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.28);
     }
 
     .modal-hero {
       position: relative;
       min-height: 360px;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      background: #111;
     }
 
     .modal-hero img {
-      width: 100%;
-      height: 360px;
-      object-fit: cover;
-    }
-
-    .modal-gallery {
-      position: relative;
-      height: 360px;
-      overflow: hidden;
-    }
-
-    .modal-gallery img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      opacity: 0.72;
     }
 
-    .modal-gallery::after {
+    .modal-hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(10,14,25,0.08), rgba(10,14,25,0.82));
-      pointer-events: none;
+      background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.78));
     }
 
-    .thumbnail-row {
-      display: flex;
-      gap: 10px;
-      padding: 14px 18px;
-      overflow-x: auto;
-      background: rgba(255,255,255,0.02);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .thumbnail-row img {
-      width: 90px;
-      height: 68px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      opacity: 0.75;
-      border: 1px solid rgba(255,255,255,0.08);
-      flex-shrink: 0;
-      transition: 0.2s;
-    }
-
-    .thumbnail-row img:hover {
-      opacity: 1;
-      transform: scale(1.04);
-    }
-
-    .modal-topbar {
-      position: absolute;
-      inset: 16px 16px auto auto;
+    .modal-title {
+      position: relative;
       z-index: 2;
+      padding: 26px;
+      color: white;
+    }
+
+    .modal-title h3 {
+      margin: 10px 0 0;
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      line-height: 0.95;
+      max-width: 820px;
     }
 
     .close-btn {
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(6,8,16,0.55);
-      color: white;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
       width: 44px;
       height: 44px;
-      border-radius: 999px;
-      font-size: 1.3rem;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,0.35);
+      color: white;
       cursor: pointer;
-    }
-
-    .modal-title-block {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 2;
-      padding: 26px;
-    }
-
-    .modal-title-block h3 {
-      margin: 8px 0 8px;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      letter-spacing: -0.03em;
+      font-size: 1.4rem;
     }
 
     .modal-body {
-      padding: 26px;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px;
-    }
-
-    .stack {
-      display: grid;
       gap: 18px;
+      padding: 22px;
     }
 
-    .panel-box {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-      border-radius: 20px;
+    .modal-box {
       padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
     }
 
-    .panel-box h4 {
+    .modal-box h4 {
       margin: 0 0 10px;
-      font-size: 1rem;
+      font-size: 0.98rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--teal-dark);
     }
 
-    .panel-box p,
-    .panel-box li {
+    .modal-box p,
+    .modal-box li {
       color: var(--muted);
     }
 
-    .tag-wrap {
-      display: flex;
-      flex-wrap: wrap;
+    .modal-box ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .spec-list {
+      display: grid;
       gap: 10px;
     }
 
-    .tag {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(124,199,255,0.10);
-      border: 1px solid rgba(124,199,255,0.16);
-      color: #e8f4ff;
-      font-size: 0.88rem;
-      font-weight: 600;
-    }
-
-    .link-group {
+    .spec-list div {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .muted { color: var(--muted); }
-
-    .empty-state {
-      grid-column: 1 / -1;
-      padding: 26px;
-      border-radius: 20px;
-      border: 1px dashed rgba(255,255,255,0.18);
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(23, 32, 28, 0.1);
       color: var(--muted);
-      text-align: center;
-      background: rgba(255,255,255,0.02);
     }
 
-    @media (max-width: 980px) {
+    .spec-list strong { color: var(--ink); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 1020px) {
+      .hero { min-height: auto; }
       .hero-grid,
-      .about-grid,
+      .section-head,
+      .contact-grid,
       .modal-body {
         grid-template-columns: 1fr;
       }
-
-      .project-card {
+      .mission-panel { min-height: 460px; }
+      .tool-wall { min-height: 500px; }
+      .proof-grid { grid-template-columns: repeat(3, 1fr); }
+      .capability-grid,
+      .skills-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .case-card {
         grid-column: span 12;
       }
     }
 
-    @media (max-width: 640px) {
-      .hero { padding-top: 56px; }
-      .hero-card, .summary-card, .about-card { padding: 20px; }
-      .project-content { padding: 18px; }
-      .project-title { font-size: 1.4rem; }
-      .nav-inner { align-items: start; flex-direction: column; }
-      .modal-title-block, .modal-body { padding: 18px; }
-      .modal-hero img { height: 260px; }
-      .project-card, .project-image-wrap { min-height: 400px; }
+    @media (max-width: 680px) {
+      .nav-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
+      .nav-links { width: 100%; overflow-x: auto; padding-bottom: 4px; }
+      .hero { padding-top: 42px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .mission-panel { min-height: 420px; }
+      .tool-wall { min-height: 520px; }
+      .tool-story { padding: 22px 18px 4px; }
+      .tool-story h2 { font-size: 2rem; }
+      .logo-track { gap: 10px; padding-inline: 10px; }
+      .logo-card { width: 148px; height: 78px; padding: 12px; }
+      .logo-card img, .logo-mark { width: 30px; height: 30px; }
+      .tool-footnote { padding: 0 18px 22px; }
+      .tech-river { top: 64px; left: 12px; right: 12px; gap: 6px; }
+      .tech-track span { min-height: 24px; font-size: 0.66rem; padding: 0 8px; }
+      .mission-copy { left: 12px; right: 12px; bottom: 12px; padding: 12px; }
+      .mission-copy h2 { font-size: 1.35rem; }
+      .mission-copy p { font-size: 0.9rem; }
+      .mission-panel .signal-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .mission-panel .signal { padding: 9px 7px; }
+      .mission-panel .signal strong { font-size: 1rem; }
+      .mission-panel .signal span { font-size: 0.68rem; }
+      .signal-row,
+      .proof-grid,
+      .capability-grid,
+      .skills-board {
+        grid-template-columns: 1fr;
+      }
+      .proof { min-height: auto; }
+      section { padding: 48px 0; }
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+      .case-card {
+        grid-template-columns: 1fr;
+      }
+      .case-media { min-height: 230px; }
+      .modal-hero { min-height: 300px; }
+      .modal-title, .modal-body { padding: 18px; }
     }
-    </style>
+  </style>
 </head>
 <body>
   <nav class="nav">
     <div class="container nav-inner">
-      <a href="#top" class="brand">Mayank Vekariya</a>
-      <div class="nav-links">
-        <a href="#projects">Projects</a>
-        <a href="#approach">Approach</a>
-        <a href="#contact">Contact</a>
-        <a href="https://github.com/yourusername" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/mv130697/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a class="brand" href="#top">Mayank Vekariya<span>Product Management & Business Development</span></a>
+      <div class="nav-links" aria-label="Main navigation">
+        <a href="#proof">Proof</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Case Files</a>
+        <a href="#skills">Skills</a>
+        <a href="Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
       </div>
     </div>
   </nav>
@@ -624,38 +1077,177 @@
   <main id="top">
     <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-card">
-          <div class="eyebrow">Project Portfolio • Delivery • Coordination • Execution</div>
-          <h1>Projects I <span>planned</span>, drove, and delivered.</h1>
+        <div>
+          <div class="eyebrow">Germany based | Product strategy | Business development</div>
+          <h1>Finding the market signal before it becomes obvious.</h1>
           <p class="lead">
-            I build and manage engineering and operations-focused projects with clear scope, stakeholder coordination,
-            structured execution, documentation discipline, and outcome tracking. This portfolio is designed to show
-            not only what was built, but how the work was organized and delivered.
+            I sit between technology, customers, partners, and commercial teams. My work is to turn scattered market signals into product direction, partner enablement, sharper positioning, and decision-ready stories that help teams move with confidence.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="#projects">Explore Projects</a>
-            <a class="btn" href="Resume.pdf" target="_blank">Download Resume</a>
-            <a class="btn" href="germanymayank@gmail.com">Contact Me</a>
+            <a class="btn primary" href="#projects">Open Case Files</a>
+            <a class="btn" href="Resume.pdf" target="_blank" rel="noreferrer">View Resume</a>
+            <a class="btn ghost" href="mailto:germanymayank@gmail.com">germanymayank@gmail.com</a>
           </div>
         </div>
 
-        <div class="summary-card">
-          <div class="metric">
-            <div class="label">Portfolio Focus</div>
-            <div class="value">Project Management</div>
+        <aside class="tool-wall" aria-label="Animated tool and technology wall">
+          <div class="tool-story">
+            <span class="label">AI as helping hands</span>
+            <h2>Sophisticated work is not louder. It is clearer.</h2>
+            <p>
+              AI helps me research, compare, draft, prototype, and stress-test ideas faster. The judgment remains human: what market matters, which customer pain is real, and which story deserves to become a product decision.
+            </p>
           </div>
-          <div class="metric">
-            <div class="label">Core Strengths</div>
-            <div class="value">Planning • Coordination • Tracking</div>
+
+          <div class="logo-marquee" aria-hidden="true">
+            <div class="logo-track">
+              <div class="logo-card"><span class="logo-mark">AI</span><div><strong>Codex</strong><span>AI build partner</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/ollama/111111" alt="" /><div><strong>Ollama</strong><span>local AI</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="" /><div><strong>Gemma</strong><span>model work</span></div></div>
+              <div class="logo-card"><span class="logo-mark">GPT</span><div><strong>ChatGPT</strong><span>research + drafts</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/github/181717" alt="" /><div><strong>GitHub</strong><span>portfolio + code</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" /><div><strong>Figma</strong><span>design thinking</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="" /><div><strong>HTML</strong><span>static web</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/css/663399" alt="" /><div><strong>CSS</strong><span>visual systems</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" /><div><strong>JavaScript</strong><span>interaction</span></div></div>
+              <div class="logo-card"><span class="logo-mark">AI</span><div><strong>Codex</strong><span>AI build partner</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/ollama/111111" alt="" /><div><strong>Ollama</strong><span>local AI</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="" /><div><strong>Gemma</strong><span>model work</span></div></div>
+              <div class="logo-card"><span class="logo-mark">GPT</span><div><strong>ChatGPT</strong><span>research + drafts</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/github/181717" alt="" /><div><strong>GitHub</strong><span>portfolio + code</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" /><div><strong>Figma</strong><span>design thinking</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="" /><div><strong>HTML</strong><span>static web</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/css/663399" alt="" /><div><strong>CSS</strong><span>visual systems</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" /><div><strong>JavaScript</strong><span>interaction</span></div></div>
+            </div>
+
+            <div class="logo-track">
+              <div class="logo-card"><span class="logo-mark">SP</span><div><strong>SharePoint</strong><span>knowledge base</span></div></div>
+              <div class="logo-card"><span class="logo-mark">XL</span><div><strong>Excel</strong><span>dashboards</span></div></div>
+              <div class="logo-card"><span class="logo-mark">PPT</span><div><strong>PowerPoint</strong><span>strategy decks</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/jira/0052CC" alt="" /><div><strong>Jira</strong><span>delivery flow</span></div></div>
+              <div class="logo-card"><span class="logo-mark">MON</span><div><strong>monday.com</strong><span>PM ecosystem</span></div></div>
+              <div class="logo-card"><span class="logo-mark">P6</span><div><strong>Primavera P6</strong><span>planning</span></div></div>
+              <div class="logo-card"><span class="logo-mark">MS</span><div><strong>MS Project</strong><span>schedules</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BI</span><div><strong>Power BI</strong><span>reporting</span></div></div>
+              <div class="logo-card"><span class="logo-mark">PV</span><div><strong>Solar PV</strong><span>energy systems</span></div></div>
+              <div class="logo-card"><span class="logo-mark">ERP</span><div><strong>ERP</strong><span>operations</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BLDC</span><div><strong>BLDC</strong><span>motor systems</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BESS</span><div><strong>BESS</strong><span>energy storage</span></div></div>
+              <div class="logo-card"><span class="logo-mark">SP</span><div><strong>SharePoint</strong><span>knowledge base</span></div></div>
+              <div class="logo-card"><span class="logo-mark">XL</span><div><strong>Excel</strong><span>dashboards</span></div></div>
+              <div class="logo-card"><span class="logo-mark">PPT</span><div><strong>PowerPoint</strong><span>strategy decks</span></div></div>
+              <div class="logo-card"><img src="https://cdn.simpleicons.org/jira/0052CC" alt="" /><div><strong>Jira</strong><span>delivery flow</span></div></div>
+              <div class="logo-card"><span class="logo-mark">MON</span><div><strong>monday.com</strong><span>PM ecosystem</span></div></div>
+              <div class="logo-card"><span class="logo-mark">P6</span><div><strong>Primavera P6</strong><span>planning</span></div></div>
+              <div class="logo-card"><span class="logo-mark">MS</span><div><strong>MS Project</strong><span>schedules</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BI</span><div><strong>Power BI</strong><span>reporting</span></div></div>
+              <div class="logo-card"><span class="logo-mark">PV</span><div><strong>Solar PV</strong><span>energy systems</span></div></div>
+              <div class="logo-card"><span class="logo-mark">ERP</span><div><strong>ERP</strong><span>operations</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BLDC</span><div><strong>BLDC</strong><span>motor systems</span></div></div>
+              <div class="logo-card"><span class="logo-mark">BESS</span><div><strong>BESS</strong><span>energy storage</span></div></div>
+            </div>
           </div>
-          <div class="metric">
-            <div class="label">Project Types</div>
-            <div class="value">Engineering • Digital • Process</div>
+
+          <div class="tool-footnote">
+            <span>Market intelligence</span>
+            <span>Partner enablement</span>
+            <span>Product storytelling</span>
+            <span>AI-assisted execution</span>
           </div>
-          <div class="metric">
-            <div class="label">What Recruiters See</div>
-            <div class="value">Scope, ownership, metrics, delivery</div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="proof-strip" id="proof">
+      <div class="container proof-grid">
+        <div class="proof"><strong>15+</strong><span>global partners supported through clearer product knowledge</span></div>
+        <div class="proof"><strong>4</strong><span>competitive landscape reports influencing product and pricing discussions</span></div>
+        <div class="proof"><strong>3</strong><span>customer/application segments translated into roadmap inputs</span></div>
+        <div class="proof"><strong>6</strong><span>executive strategy decks for portfolio review conversations</span></div>
+        <div class="proof"><strong>30%</strong><span>fewer repeated partner queries through a knowledge database</span></div>
+        <div class="proof"><strong>5,000+</strong><span>research records analysed for innovation-management work</span></div>
+      </div>
+    </div>
+
+    <section id="value">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Role fit</p>
+            <h2>Built for product and growth conversations.</h2>
           </div>
+          <p class="section-copy">
+            The strongest version of my story is the bridge between technical depth and commercial clarity: understanding a product, reading the market around it, enabling partners, and turning research into decisions a team can actually use.
+          </p>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability">
+            <div class="icon">01</div>
+            <h3>Market signal sensing</h3>
+            <p>Researching competitors, customers, applications, and buying context to find what matters before it becomes obvious in a dashboard.</p>
+          </article>
+          <article class="capability">
+            <div class="icon">02</div>
+            <h3>Product translation</h3>
+            <p>Turning technical detail into clear positioning, roadmap inputs, product stories, and partner-ready explanations.</p>
+          </article>
+          <article class="capability">
+            <div class="icon">03</div>
+            <h3>Partner enablement</h3>
+            <p>Building knowledge systems and structured material that help distributors, internal teams, and decision-makers move with less confusion.</p>
+          </article>
+          <article class="capability">
+            <div class="icon">04</div>
+            <h3>Business development mindset</h3>
+            <p>Connecting customer value, technical feasibility, competitive pressure, and commercial opportunity into one coherent direction.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Experience</p>
+            <h2>The pattern across my work.</h2>
+          </div>
+          <p class="section-copy">
+            Each role has strengthened the same product habit: listen for weak signals, structure what people know, translate technical detail into business language, and help teams decide what to do next.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-date">Dec 2024 - Present</div>
+            <div>
+              <h3>Working Student, Strategic Marketing | attocube systems GmbH</h3>
+              <p>Built a Distributor Knowledge Database for 15+ global partners, created 4 competitive landscape reports, structured customer and application requirements across 3 segments, and prepared executive strategy decks for portfolio reviews.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">May 2023 - Sep 2024</div>
+            <div>
+              <h3>Research Assistant | Hochschule Harz</h3>
+              <p>Analysed datasets of 5,000+ records, co-authored 2 research papers, and standardised documentation workflows to reduce onboarding time from about 2 weeks to 3 days.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">Jan 2021 - Dec 2021</div>
+            <div>
+              <h3>Project Manager | Falcon Pumps Pvt. Ltd.</h3>
+              <p>Led solar PV and motor-engineering projects close to real customer needs: site constraints, supplier trade-offs, installation realities, cost pressure, and handover expectations.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">Jun 2019 - Dec 2020</div>
+            <div>
+              <h3>Junior Project Manager / Trainee | Falcon Pumps Pvt. Ltd.</h3>
+              <p>Built Gantt schedules, cost trackers, and progress dashboards used across 4 departments while rotating through production, quality, and engineering.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -664,55 +1256,87 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Selected Projects</h2>
-            <p class="section-copy">
-              Hover over each project to see quick specifications. Click any project to open the full project sheet with
-              objectives, scope, tools, outcomes, and delivery details.
-            </p>
+            <p class="kicker">Case files</p>
+            <h2>Technical worlds I can turn into product stories.</h2>
           </div>
+          <p class="section-copy">
+            A hiring manager should see more than projects here. They should see that I can understand a technical system, identify who it serves, explain the constraints, and translate execution reality into product, partner, and market insight.
+          </p>
         </div>
 
-        <div class="filter-card" id="filterBar"></div>
-        <div class="project-grid" id="projectGrid"></div>
+        <div class="filters" id="filters"></div>
+        <div class="case-grid" id="caseGrid"></div>
       </div>
     </section>
 
-    <section id="approach">
+    <section id="skills">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>How I Approach Projects</h2>
-            <p class="section-copy">
-              This section helps position the portfolio for project manager roles by showing how work is planned,
-              tracked, coordinated, and brought to completion.
-            </p>
+            <p class="kicker">Toolbox</p>
+            <h2>Skills grouped by product and growth work.</h2>
           </div>
+          <p class="section-copy">
+            The goal is not a long keyword cloud. The goal is to show how I think across market research, product strategy, commercial execution, AI-assisted work, and technical understanding.
+          </p>
         </div>
 
-        <div class="about-grid">
-          <div class="about-card">
-            <h3>Execution Style</h3>
-            <div class="list">
-              <div><strong>Define scope clearly:</strong> align the objective, deliverables, constraints, and success criteria at the start.</div>
-              <div><strong>Break work into phases:</strong> convert complex work into milestones, owners, dependencies, and review points.</div>
-              <div><strong>Coordinate stakeholders:</strong> keep technical and non-technical contributors aligned through structured communication.</div>
-              <div><strong>Track progress visibly:</strong> follow timelines, risks, blockers, and decisions with disciplined reporting.</div>
-              <div><strong>Close with evidence:</strong> show outcomes through documentation, handover quality, metrics, and lessons learned.</div>
-            </div>
+        <div class="skills-board">
+          <div class="skill-column">
+            <h3>Product Management</h3>
+            <ul>
+              <li>Customer and application requirements</li>
+              <li>Product roadmap inputs</li>
+              <li>Competitive positioning</li>
+              <li>Product documentation</li>
+              <li>Cross-functional alignment</li>
+            </ul>
           </div>
+          <div class="skill-column">
+            <h3>Business Development</h3>
+            <ul>
+              <li>Market and competitor analysis</li>
+              <li>Partner enablement systems</li>
+              <li>Commercial storytelling</li>
+              <li>Pricing and bundle research</li>
+              <li>Stakeholder-ready presentations</li>
+            </ul>
+          </div>
+          <div class="skill-column">
+            <h3>AI and Analysis</h3>
+            <ul>
+              <li>AI-assisted research workflows</li>
+              <li>Structured synthesis</li>
+              <li>Data cleaning and analysis</li>
+              <li>Rapid prototyping</li>
+              <li>Decision memo drafting</li>
+            </ul>
+          </div>
+          <div class="skill-column">
+            <h3>Tools and Systems</h3>
+            <ul>
+              <li>SharePoint, Excel, PowerPoint</li>
+              <li>Jira, monday.com, MS Project</li>
+              <li>Codex, ChatGPT, Ollama, Gemma</li>
+              <li>GitHub Pages, HTML, CSS, JavaScript</li>
+              <li>ERP, Power BI, Primavera P6</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="footer" id="contact">
-      <div class="container">
-        <div class="footer-card">
-          <div>
-            <strong>Ready for project, coordination, and delivery-focused roles.</strong>
-            <div class="muted"> Mayankvekariya100@gmail.com </div>
-          </div>
-          <div class="hero-actions">
-            <a class="btn" href="germanymayank@gmail.com">Email</a>
-            <a class="btn" href="https://github.com/yourusername" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="btn" href="https://www.linkedin.com/in/mv130697/" target="_blank" rel="noopener noreferrer"></a>
-          </div>
+    <section class="contact-band" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <p class="kicker">Contact</p>
+          <h2>Ready for product management and business development roles.</h2>
+          <p>Based in Nürnberg, Germany. Open to product management, product operations, business development, strategic marketing, partner enablement, and technical-commercial roles.</p>
+        </div>
+        <div class="button-row">
+          <a class="btn" href="mailto:germanymayank@gmail.com">Email</a>
+          <a class="btn" href="https://www.linkedin.com/in/mv130697/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="https://github.com/GermanyMayank" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </div>
     </section>
@@ -721,64 +1345,29 @@
   <div class="modal" id="projectModal" aria-hidden="true">
     <div class="modal-panel">
       <div class="modal-hero">
-        <div class="modal-gallery">
-          <img id="modalMainImage" src="" alt="Project image" />
-        </div>
-
-        <div class="modal-topbar">
-          <button class="close-btn" id="closeModal" aria-label="Close modal">×</button>
-        </div>
-
-        <div class="modal-title-block">
-          <div class="project-type" id="modalCategory"></div>
+        <button class="close-btn" id="closeModal" aria-label="Close project details">x</button>
+        <img id="modalImage" src="" alt="" />
+        <div class="modal-title">
+          <span class="status-pill" id="modalCategory"></span>
           <h3 id="modalTitle"></h3>
-          <p class="project-summary" id="modalSummary"></p>
         </div>
       </div>
-
-      <div class="thumbnail-row" id="modalThumbnails"></div>
-
       <div class="modal-body">
-        <div class="stack">
-          <div class="panel-box">
-            <h4>Project Overview</h4>
-            <p id="modalOverview"></p>
-          </div>
-          <div class="panel-box">
-            <h4>Technical Specifications</h4>
-            <div class="list" id="modalTechSpecs"></div>
-          </div>
-          <div class="panel-box">
-            <h4>Responsibilities</h4>
-            <ul id="modalResponsibilities"></ul>
-          </div>
-
-          <div class="panel-box">
-            <h4>Challenges and Actions</h4>
-            <p id="modalChallenges"></p>
-          </div>
-
-          <div class="panel-box">
-            <h4>Results and Impact</h4>
-            <p id="modalResults"></p>
-          </div>
+        <div class="modal-box">
+          <h4>Project Brief</h4>
+          <p id="modalBrief"></p>
         </div>
-
-        <div class="stack">
-          <div class="panel-box">
-            <h4>Quick Specs</h4>
-            <div class="list" id="modalSpecs"></div>
-          </div>
-
-          <div class="panel-box">
-            <h4>Tools and Methods</h4>
-            <div class="tag-wrap" id="modalTools"></div>
-          </div>
-
-          <div class="panel-box">
-            <h4>Links</h4>
-            <div class="link-group" id="modalLinks"></div>
-          </div>
+        <div class="modal-box">
+          <h4>Quick Specs</h4>
+          <div class="spec-list" id="modalSpecs"></div>
+        </div>
+        <div class="modal-box">
+          <h4>My Responsibilities</h4>
+          <ul id="modalResponsibilities"></ul>
+        </div>
+        <div class="modal-box">
+          <h4>Result</h4>
+          <p id="modalResult"></p>
         </div>
       </div>
     </div>
@@ -786,563 +1375,300 @@
 
   <script>
     const projects = [
-
-{
-  title: "5 MW Solar PV Plant Execution and Coordination",
-  category: "Renewable Energy Project",
-  filter: "Engineering",
-  images: ["images/project-1.jpg"],
-
-  shortSummary: "Coordinated execution of a utility-scale solar PV plant, managing multi-team installation activities, progress tracking, and on-site workflow alignment.",
-
-  overview: "Worked on the execution of a 5 MW ground-mounted solar PV plant, focusing on installation coordination, activity sequencing, and real-time progress tracking. The role involved aligning civil, mechanical, and electrical teams to ensure smooth installation flow while maintaining visibility on daily progress, dependencies, and delays.",
-
-  responsibilities: [
-    "Coordinated installation activities across civil, electrical, and module mounting teams",
-    "Tracked daily progress against installation schedules and identified execution gaps",
-    "Managed workfront readiness and ensured smooth transition between installation phases",
-    "Prepared structured progress reports and maintained execution documentation",
-    "Supported on-site communication between teams to resolve blockers in real time"
-  ],
-
-  challenges: "Managing parallel execution across multiple zones with dependencies between civil and electrical work, while maintaining consistent progress tracking in an outdoor environment with variable conditions.",
-
-  results: "Improved installation flow and execution visibility by introducing structured tracking and coordination practices, enabling better alignment across teams and reducing delays caused by sequencing issues.",
-
-  impact: [
-    "Improved coordination across 3+ teams (civil, electrical, installation)",
-    "Enhanced daily progress visibility and reporting accuracy",
-    "Reduced idle time between dependent activities through better sequencing",
-    "Minimized rework caused by misaligned installation phases"
-  ],
-
-  decisions: [
-    "Re-sequenced installation workflow to reduce dependency-related delays",
-    "Prioritized critical workfronts to maintain continuous execution flow",
-    "Standardized daily tracking format for better visibility across teams"
-  ],
-
-  complexity: [
-    "Multi-team coordination across civil, electrical, and installation work",
-    "Parallel execution across multiple zones",
-    "Dependency-driven installation sequence",
-    "Outdoor execution with environmental constraints"
-  ],
-
-  specs: [
-    ["Role", "Project Coordination / Site Execution"],
-    ["Duration", "16 weeks"],
-    ["Team", "20+ technicians across teams"],
-    ["Focus", "Execution planning and coordination"],
-    ["Outcome", "Improved workflow visibility and coordination"]
-  ],
-
-  technicalSpecs: [
-    ["Plant Type", "Ground-mounted Solar PV"],
-    ["Installed Capacity", "5 MW"],
-    ["Module Type", "Monocrystalline"],
-    ["Mounting", "Fixed tilt"],
-    ["Inverter", "String Inverters"],
-    ["Voltage", "1000–1500 V DC"]
-  ],
-
-  previewSpecs: ["5 MW plant", "Execution coordination", "Multi-team"],
-
-  tools: [
-    "Excel",
-    "Project Tracking Sheets",
-    "Site Reporting",
-    "Coordination and Planning"
-  ],
-
-  links: []
-},
-
-{
-  title: "500 kW Rooftop Solar PV Installation",
-  category: "Renewable Energy Project",
-  filter: "Engineering",
-  images: ["images/project-2.jpg"],
-
-  shortSummary: "Managed execution and coordination of a rooftop solar installation, ensuring safe operations, sequencing, and real-time progress tracking.",
-
-  overview: "Executed a 500 kW rooftop solar installation project on an industrial facility, focusing on installation coordination, safety compliance, and workflow tracking. The role involved managing constrained rooftop operations, aligning installation teams, and ensuring structured execution under safety and access limitations.",
-
-  responsibilities: [
-    "Coordinated rooftop installation activities including structure and module placement",
-    "Monitored installation progress and ensured adherence to execution plans",
-    "Ensured compliance with working-at-height safety standards",
-    "Maintained daily logs, issue tracking, and progress documentation",
-    "Aligned installation teams with site constraints and access limitations"
-  ],
-
-  challenges: "Executing installation in a constrained rooftop environment with strict safety requirements, limited access, and weather dependencies, while maintaining steady progress.",
-
-  results: "Enabled safe and structured execution of rooftop installation, improving coordination and maintaining consistent progress despite operational constraints.",
-
-  impact: [
-    "Maintained 100% safety compliance during rooftop execution",
-    "Improved coordination between installation and safety teams",
-    "Reduced delays caused by access and sequencing issues",
-    "Enhanced visibility of daily execution progress"
-  ],
-
-  decisions: [
-    "Adjusted installation sequence based on rooftop accessibility constraints",
-    "Prioritized safety-first workflow without impacting overall timeline",
-    "Implemented structured daily tracking for issue resolution"
-  ],
-
-  complexity: [
-    "Safety-critical environment (working at height)",
-    "Limited access and constrained workspace",
-    "Weather-dependent execution",
-    "High coordination between installation and safety teams"
-  ],
-
-  specs: [
-    ["Role", "Site Execution / Coordination"],
-    ["Duration", "10 weeks"],
-    ["Team", "Installation + Safety Teams"],
-    ["Focus", "Rooftop execution"],
-    ["Outcome", "Safe and efficient installation"]
-  ],
-
-  technicalSpecs: [
-    ["Plant Type", "Rooftop Solar PV"],
-    ["Capacity", "500 kW"],
-    ["Mounting", "Rooftop fixed tilt"],
-    ["Voltage", "1000 V DC"],
-    ["Installation", "Industrial rooftop"]
-  ],
-
-  previewSpecs: ["Rooftop solar", "Safety-critical", "Execution"],
-
-  tools: [
-    "Excel",
-    "Installation Planning",
-    "Safety Coordination",
-    "Reporting"
-  ],
-
-  links: []
-},
-
-{
-  title: "10 MW Solar Farm Deployment with Tracker System",
-  category: "Renewable Energy Project",
-  filter: "Engineering",
-  images: ["images/project-3.jpg"],
-
-  shortSummary: "Coordinated large-scale solar farm deployment with tracker systems, focusing on mechanical alignment, sequencing, and field execution monitoring.",
-
-  overview: "Worked on the deployment of a 10 MW solar farm with single-axis tracking systems, focusing on installation sequencing, alignment accuracy, and multi-team coordination. The role required managing repetitive but precision-critical tasks such as tracker alignment and module installation across a large field.",
-
-  responsibilities: [
-    "Coordinated installation of tracker structures and PV modules",
-    "Monitored alignment accuracy and mechanical positioning",
-    "Tracked execution progress across multiple parallel work zones",
-    "Ensured coordination between mechanical and electrical teams",
-    "Maintained logs and progress reports for field execution"
-  ],
-
-  challenges: "Handling large-scale field execution with precision requirements, ensuring alignment accuracy while managing multiple teams and environmental challenges such as heat and uneven terrain.",
-
-  results: "Improved installation efficiency and reduced rework by ensuring better alignment practices and structured coordination across teams.",
-
-  impact: [
-    "Improved alignment accuracy of tracker systems",
-    "Reduced rework caused by misalignment issues",
-    "Enhanced execution efficiency across large-scale field operations",
-    "Strengthened coordination across mechanical and electrical teams"
-  ],
-
-  decisions: [
-    "Standardized alignment checks to reduce errors",
-    "Optimized installation sequence for large-area deployment",
-    "Improved coordination between parallel work zones"
-  ],
-
-  complexity: [
-    "Large-scale field deployment (10 MW)",
-    "Precision-dependent mechanical alignment",
-    "Multiple parallel work zones",
-    "Environmental challenges (heat, terrain)"
-  ],
-
-  specs: [
-    ["Role", "Field Coordination"],
-    ["Duration", "12 weeks"],
-    ["Team", "Mechanical + Electrical"],
-    ["Focus", "Solar farm deployment"],
-    ["Outcome", "Improved alignment and execution"]
-  ],
-
-  technicalSpecs: [
-    ["Plant Type", "Ground-mounted Solar"],
-    ["Capacity", "10 MW"],
-    ["Tracking", "Single-axis tracker"],
-    ["Structure", "Galvanized steel"],
-    ["Voltage", "1000–1500 V DC"]
-  ],
-
-  previewSpecs: ["10 MW farm", "Tracker system", "Field execution"],
-
-  tools: [
-    "Excel",
-    "Field Tracking",
-    "Coordination",
-    "Reporting"
-  ],
-
-  links: []
-},
-
-{
-  title: "BLDC Motor Prototype Development (End-to-End)",
-  category: "Electromechanical Engineering Project",
-  filter: "Engineering",
-  images: ["images/project-4-1.jpg", "images/project-4-2.jpg", "images/project-4-3.jpg"],
-
-  shortSummary: "Independently designed and built a functional BLDC motor prototype, managing the full lifecycle from concept to testing.",
-
-  overview: "Developed a BLDC motor prototype from scratch, covering electromagnetic design, mechanical integration, assembly, and testing. The project involved hands-on design decisions, iterative improvements, and validation of motor performance under test conditions.",
-
-  responsibilities: [
-    "Designed stator, rotor, and winding configuration",
-    "Executed manual winding with phase alignment",
-    "Developed rotor assembly with magnet placement and balancing",
-    "Integrated shaft, bearings, and housing",
-    "Performed testing for rotation, torque, and stability",
-    "Managed full lifecycle from concept to validation"
-  ],
-
-  challenges: "Achieving precise alignment between mechanical and electromagnetic components, ensuring winding consistency, rotor balance, and maintaining optimal air-gap.",
-
-  results: "Successfully developed a working BLDC motor prototype demonstrating stable rotation and functional performance.",
-
-  impact: [
-    "Delivered a complete working prototype independently",
-    "Achieved stable rotation with minimal vibration",
-    "Validated electromechanical integration through testing",
-    "Built strong hands-on understanding of motor systems"
-  ],
-
-  decisions: [
-    "Selected winding configuration for torque optimization",
-    "Balanced rotor to minimize vibration",
-    "Iteratively refined alignment and air-gap"
-  ],
-
-  complexity: [
-    "End-to-end individual project",
-    "Electromagnetic + mechanical integration",
-    "Precision-dependent assembly",
-    "Iterative prototyping and testing"
-  ],
-
-  specs: [
-    ["Role", "End-to-End Developer"],
-    ["Duration", "8–10 weeks"],
-    ["Team", "Individual"],
-    ["Focus", "Prototype development"],
-    ["Outcome", "Working motor"]
-  ],
-
-  technicalSpecs: [
-    ["Motor Type", "BLDC"],
-    ["Phases", "3-phase"],
-    ["Rotor", "Permanent magnet"],
-    ["Voltage", "12–48 V"],
-    ["Cooling", "Passive"]
-  ],
-
-  previewSpecs: ["BLDC motor", "Prototype", "End-to-end"],
-
-  tools: [
-    "Manual Tools",
-    "Testing Equipment",
-    "Basic CAD",
-    "Assembly Tools"
-  ],
-
-  links: []
-}, {
-  title: "Solar-Powered Water Pump Deployment for Remote Locations - Falcon Pumps Pvt Ltd",
-  category: "Renewable Energy & Industrial Project",
-  filter: "Engineering",
-  images: ["images/project-5.jpg"],
-  shortSummary: "Researched, designed, and supported deployment of solar-powered water pumping solutions for remote areas, enabling reliable water supply without grid dependency.",
-
-  overview: "At Falcon Pumps Pvt Ltd, I worked on enabling solar-powered water pumping solutions targeted at remote and off-grid locations. The objective was to identify technically feasible and cost-effective configurations for operating water pumps using solar energy. This involved researching system components, sizing solar arrays, selecting compatible pumps, and defining deployment configurations suitable for rural and low-infrastructure environments. The outcome supported practical implementation of solar pump systems that are still used for water supply in remote areas.",
-
-  responsibilities: [
-    "Researched solar-powered pumping systems including PV modules, controllers, and motor compatibility",
-    "Identified suitable pump types and configurations for solar-based operation",
-    "Performed basic system sizing for solar panels based on pump load requirements",
-    "Analyzed feasibility for deployment in remote and off-grid locations",
-    "Coordinated with internal teams to align technical feasibility with product offerings",
-    "Supported documentation of system configurations for practical implementation"
-  ],
-
-  challenges: "The main challenge was balancing system cost, performance, and reliability in remote environments with limited infrastructure. Variability in sunlight, load requirements, and installation conditions required adaptable and simplified system configurations.",
-
-  results: "Enabled practical solar-powered pumping solutions for remote applications, improving access to water without reliance on grid electricity. The configurations developed supported real-world deployment and are aligned with ongoing usage in field conditions.",
-
-  specs: [
-    ["Company", "Falcon Pumps Pvt Ltd"],
-    ["Role", "System Research & Implementation Support"],
-    ["Duration", "4-6 weeks"],
-    ["Application", "Remote water supply"],
-    ["Outcome", "Solar pump solutions deployed and used"]
-  ],
-
-  technicalSpecs: [
-    ["System Type", "Solar-powered water pumping system"],
-    ["Power Source", "Photovoltaic (PV) panels"],
-    ["Pump Type", "DC/AC submersible or surface pumps"],
-    ["Controller", "Solar pump controller / VFD"],
-    ["Power Range", "Small to medium scale (1–10 HP typical)"],
-    ["Operation", "Off-grid / standalone system"],
-    ["Energy Storage", "Optional (battery-less direct operation)"],
-    ["Installation", "Rural and remote locations"],
-    ["Key Parameters", "Flow rate, head, solar irradiance"],
-    ["Design Focus", "Efficiency, reliability, low maintenance"]
-  ],
-
-  previewSpecs: ["Solar pump system", "Remote deployment", "Off-grid solution"],
-
-  tools: [
-    "Excel",
-    "Technical Research",
-    "System Sizing",
-    "Feasibility Analysis",
-    "Documentation"
-  ],
-
-  links: [
-    { label: "Project Summary", url: "#" }
-  ]
-},
-{
-  title: "Field Operations Dashboard for Project Progress Tracking – Falcon Pumps Pvt Ltd",
-  category: "Operations & Project Management System",
-  filter: "Engineering",
-  images: ["images/project-6.jpg"],
-
-  shortSummary: "Designed and implemented a field reporting dashboard enabling real-time visibility of site progress, improving coordination between field engineers and management.",
-
-  overview: "At Falcon Pumps Pvt Ltd, I identified a critical gap in communication between field engineers and management, where project progress updates from sites were inconsistent and delayed. I designed and implemented a structured dashboard system that allowed field engineers to report daily progress, issues, and status updates in a standardized format. The dashboard provided management with clear visibility into ongoing site activities, enabling faster decision-making and improved coordination. The system continues to be actively used for project tracking.",
-
-  responsibilities: [
-    "Analyzed communication gaps between field engineers and management",
-    "Designed a structured reporting framework for site progress updates",
-    "Developed an Excel-based dashboard for daily reporting and tracking",
-    "Defined key reporting parameters such as progress status, delays, issues, and dependencies",
-    "Coordinated with field engineers to ensure adoption and correct usage",
-    "Standardized reporting format across multiple sites for consistency"
-  ],
-
-  challenges: "The main challenge was ensuring consistent and accurate reporting from field teams working in different locations. This was addressed by simplifying the reporting structure and aligning it with daily workflow practices to ensure ease of use and adoption.",
-
-  results: "Significantly improved visibility of project execution across sites, reduced communication delays, and enabled faster issue identification and resolution. The dashboard is still actively used by field engineers and management for tracking ongoing projects.",
-
-  specs: [
-    ["Company", "Falcon Pumps Pvt Ltd"],
-    ["Role", "System Developer / Project Coordination"],
-    ["Duration", "6–8 weeks"],
-    ["Users", "Field Engineers and Management"],
-    ["Focus", "Project tracking and reporting"],
-    ["Outcome", "System implemented and actively used"]
-  ],
-
-  technicalSpecs: [
-    ["System Type", "Field reporting and progress tracking dashboard"],
-    ["Platform", "Excel-based dashboard"],
-    ["Data Input", "Manual daily updates from field engineers"],
-    ["Key Metrics", "Progress status, delays, issues, dependencies"],
-    ["Reporting Frequency", "Daily updates"],
-    ["Coverage", "Multiple project sites"],
-    ["Output", "Centralized dashboard for management visibility"],
-    ["Integration", "Standalone system (expandable to ERP/PM tools)"],
-    ["Impact Area", "Execution tracking and decision-making"]
-  ],
-
-  previewSpecs: ["Dashboard system", "Field reporting", "Real-time tracking"],
-
-  tools: [
-    "Excel",
-    "Dashboard Design",
-    "Data Structuring",
-    "Process Standardization",
-    "Stakeholder Coordination"
-  ],
-
-  links: [
-    { label: "Project Summary", url: "#" }
-  ]
-}
-
-];
-
-
-    const projectGrid = document.getElementById('projectGrid');
-    const filterBar = document.getElementById('filterBar');
-    const modal = document.getElementById('projectModal');
-    const closeModal = document.getElementById('closeModal');
-
-    const filters = ['All', ...new Set(projects.map(p => p.filter))];
-    let activeFilter = 'All';
+      {
+        title: "Distributor Knowledge Database",
+        category: "Partner Enablement",
+        filter: "Product & BD",
+        visual: "KDB",
+        summary: "A single source of truth for global distributors, built to reduce repeated product and pricing questions.",
+        brief: "At attocube systems, I built a SharePoint-based Distributor Knowledge Database for 15+ global partners. The work was not just documentation; it was product enablement: structuring product, pricing, and application knowledge so partner conversations could move faster and more consistently.",
+        metrics: ["15+ partners", "30% fewer repeat queries", "SharePoint"],
+        specs: [["Role", "Strategic Marketing / Partner Enablement"], ["Scope", "Distributor product knowledge system"], ["Focus", "Information architecture, product clarity, partner support"], ["Outcome", "Reduced repeated onboarding and product questions"]],
+        responsibilities: ["Mapped recurring distributor information needs", "Structured product and pricing information into a usable knowledge base", "Created a clearer internal and external source of truth", "Reduced friction between product, commercial, and partner communication"],
+        result: "Improved partner enablement by making product information easier to find, explain, and reuse across global distributor conversations."
+      },
+      {
+        title: "Competitive Landscape and Product Strategy",
+        category: "Product Strategy",
+        filter: "Product & BD",
+        visual: "PM",
+        summary: "Market and competitor intelligence translated into product positioning, pricing, and bundle strategy inputs.",
+        brief: "Created structured competitive landscape reports for nanopositioner and precision-sensor lines, translating technical product comparisons and market signals into decision-ready material for portfolio and pricing conversations.",
+        metrics: ["4 reports", "3 segments", "C-suite decks"],
+        specs: [["Role", "Strategic Marketing / Product Strategy"], ["Scope", "Competitive intelligence and roadmap input"], ["Focus", "Positioning, requirements, pricing signals"], ["Outcome", "Supported portfolio review and product-bundle discussions"]],
+        responsibilities: ["Analysed competitor positioning and product signals", "Gathered customer and application requirements across 3 segments", "Prepared executive-level strategy decks", "Translated technical findings into product and business recommendations"],
+        result: "Helped leadership discussions become more concrete by turning scattered market and technical data into clear strategic options."
+      },
+      {
+        title: "5 MW Solar PV Plant Execution",
+        category: "Renewable Energy",
+        filter: "Solar PV",
+        image: "images/project-1.jpg",
+        summary: "Utility-scale solar execution with civil, electrical, and installation teams moving in parallel.",
+        brief: "Coordinated execution of a 5 MW ground-mounted solar PV plant, keeping workfronts, installation sequencing, daily progress, and team communication visible across site activities.",
+        metrics: ["5 MW", "20+ technicians", "16 weeks"],
+        specs: [["Role", "Project Coordination / Site Execution"], ["Scope", "Ground-mounted solar PV"], ["Focus", "Sequencing, reporting, workfront readiness"], ["Outcome", "Improved workflow visibility"]],
+        responsibilities: ["Coordinated civil, electrical, and module mounting activities", "Tracked daily progress against installation schedules", "Prepared execution documentation and progress reports", "Resolved on-site blockers between dependent teams"],
+        result: "Improved multi-team alignment and reduced idle time between dependent installation phases through structured tracking and daily coordination."
+      },
+      {
+        title: "500 kW Rooftop Solar Installation",
+        category: "Site Coordination",
+        filter: "Solar PV",
+        image: "images/project-2.jpg",
+        summary: "Safety-critical rooftop execution with constrained access, weather dependency, and working-at-height discipline.",
+        brief: "Managed execution coordination for an industrial rooftop solar installation where safe access, installation sequence, and progress tracking had to be controlled tightly.",
+        metrics: ["500 kW", "Rooftop", "Zero incidents"],
+        specs: [["Role", "Site Execution / Coordination"], ["Scope", "Industrial rooftop PV"], ["Focus", "Safety, access, installation flow"], ["Outcome", "Safe and structured delivery"]],
+        responsibilities: ["Coordinated rooftop structure and module placement", "Maintained daily logs and issue tracking", "Aligned safety requirements with installation sequence", "Managed progress under access and weather constraints"],
+        result: "Maintained safe, consistent installation progress while reducing delays caused by rooftop access and sequencing limitations."
+      },
+      {
+        title: "10 MW Solar Farm Tracker Deployment",
+        category: "Field Execution",
+        filter: "Solar PV",
+        image: "images/project-3.jpg",
+        summary: "Large-area tracker deployment where precision alignment and parallel work-zone coordination mattered.",
+        brief: "Supported deployment of a 10 MW solar farm with single-axis tracker systems, focusing on alignment accuracy, repetitive installation quality, and team sequencing.",
+        metrics: ["10 MW", "Tracker system", "Parallel zones"],
+        specs: [["Role", "Field Coordination"], ["Scope", "Solar farm with trackers"], ["Focus", "Alignment, sequencing, progress tracking"], ["Outcome", "Reduced rework"]],
+        responsibilities: ["Coordinated tracker structure and PV module installation", "Monitored mechanical alignment accuracy", "Tracked execution across multiple zones", "Managed coordination between mechanical and electrical teams"],
+        result: "Improved installation efficiency and reduced rework by standardising alignment checks and coordinating parallel field activity."
+      },
+      {
+        title: "BLDC Motor Prototype",
+        category: "Electromechanical",
+        filter: "Engineering",
+        image: "images/project-4-1.jpg",
+        summary: "End-to-end prototype development from concept, winding, rotor assembly, integration, and testing.",
+        brief: "Independently developed a functional BLDC motor prototype, combining electromagnetic design, mechanical assembly, iterative refinement, and validation testing.",
+        metrics: ["3-phase", "Prototype", "End-to-end"],
+        specs: [["Role", "End-to-End Developer"], ["Scope", "BLDC motor prototype"], ["Focus", "Design, assembly, validation"], ["Outcome", "Working motor"]],
+        responsibilities: ["Designed stator, rotor, and winding configuration", "Executed manual winding and phase alignment", "Integrated shaft, bearings, and housing", "Tested rotation, torque, and stability"],
+        result: "Delivered a working prototype with stable rotation, demonstrating hands-on understanding of electromechanical systems."
+      },
+      {
+        title: "Solar-Powered Water Pump Deployment",
+        category: "Remote Energy Systems",
+        filter: "Engineering",
+        image: "images/project-5.jpg",
+        summary: "Solar pump system research and deployment support for remote and off-grid water applications.",
+        brief: "Researched and supported deployment configurations for solar-powered pumping systems at Falcon Pumps, balancing cost, reliability, component compatibility, and remote-site constraints.",
+        metrics: ["Off-grid", "1-10 HP", "Rural use"],
+        specs: [["Company", "Falcon Pumps Pvt. Ltd."], ["Scope", "Solar pumping systems"], ["Focus", "Sizing, feasibility, configuration"], ["Outcome", "Deployable remote solution"]],
+        responsibilities: ["Researched PV modules, controllers, and motor compatibility", "Selected pump configurations for solar operation", "Performed basic solar sizing based on pump load", "Documented practical deployment configurations"],
+        result: "Supported practical solar pump solutions for remote water supply without grid dependency."
+      },
+      {
+        title: "Field Operations Dashboard",
+        category: "Project Controls",
+        filter: "Operations",
+        image: "images/project-6.jpg",
+        summary: "A reporting dashboard that converted scattered site updates into management visibility.",
+        brief: "Designed an Excel-based field reporting dashboard to standardise daily site updates, delays, issues, and dependencies between field engineers and management.",
+        metrics: ["Daily reports", "Multi-site", "Excel dashboard"],
+        specs: [["Company", "Falcon Pumps Pvt. Ltd."], ["Scope", "Field reporting system"], ["Focus", "Visibility, consistency, decision support"], ["Outcome", "Actively used tracking system"]],
+        responsibilities: ["Analysed communication gaps between field teams and management", "Defined reporting parameters and daily update structure", "Built a dashboard for progress and issue visibility", "Coordinated adoption with field engineers"],
+        result: "Improved project execution visibility, reduced communication delays, and helped management identify issues faster."
+      }
+    ];
+
+    const filters = ["All", ...Array.from(new Set(projects.map(project => project.filter)))];
+    let activeFilter = "All";
+    const filterNode = document.getElementById("filters");
+    const caseGrid = document.getElementById("caseGrid");
+    const modal = document.getElementById("projectModal");
 
     function renderFilters() {
-      filterBar.innerHTML = '';
-      filters.forEach(filter => {
-        const button = document.createElement('button');
-        button.className = `chip ${filter === activeFilter ? 'active' : ''}`;
-        button.textContent = filter;
-        button.addEventListener('click', () => {
-          activeFilter = filter;
+      filterNode.innerHTML = filters.map(filter => `<button class="chip ${filter === activeFilter ? "active" : ""}" data-filter="${filter}">${filter}</button>`).join("");
+      filterNode.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+          activeFilter = button.dataset.filter;
           renderFilters();
           renderProjects();
         });
-        filterBar.appendChild(button);
       });
     }
 
     function renderProjects() {
-      const filtered = activeFilter === 'All'
-        ? projects
-        : projects.filter(project => project.filter === activeFilter);
-
-      if (!filtered.length) {
-        projectGrid.innerHTML = '<div class="empty-state">No projects found for this filter.</div>';
-        return;
-      }
-
-      projectGrid.innerHTML = filtered.map((project, index) => `
-        <article class="project-card" data-index="${projects.indexOf(project)}">
-          <div class="project-image-wrap">
-            <img class="project-image" src="${(project.images && project.images.length) ? project.images[0] : project.image}" alt="${project.title}" />
-            <div class="project-gradient"></div>
-            <div class="project-content minimal">
-              <h3 class="project-title">${project.title}</h3>
+      const visible = activeFilter === "All" ? projects : projects.filter(project => project.filter === activeFilter);
+      caseGrid.innerHTML = visible.map(project => {
+        const index = projects.indexOf(project);
+        const metricHtml = project.metrics.map(metric => `<span>${metric}</span>`).join("");
+        return `
+          <article class="case-card" data-index="${index}" tabindex="0" role="button" aria-label="Open project: ${project.title}">
+            <div class="case-media">
+              ${project.image ? `<img src="${project.image}" alt="${project.title}" />` : `<div class="case-visual"><span>${project.visual || "PM"}</span></div>`}
+              <span class="case-tag">${project.category}</span>
             </div>
+            <div class="case-body">
+              <h3>${project.title}</h3>
+              <p>${project.summary}</p>
+              <div class="case-meta">${metricHtml}</div>
+              <span class="open-case">Open project sheet</span>
             </div>
-          </div>
-        </article>
-      `).join('');
+          </article>
+        `;
+      }).join("");
 
-      document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', () => openProject(Number(card.dataset.index)));
+      caseGrid.querySelectorAll(".case-card").forEach(card => {
+        card.addEventListener("click", () => openProject(Number(card.dataset.index)));
+        card.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openProject(Number(card.dataset.index));
+          }
+        });
       });
     }
 
     function openProject(index) {
       const project = projects[index];
-
-      const mainImage = document.getElementById('modalMainImage');
-      const thumbnails = document.getElementById('modalThumbnails');
-
-      const projectImages = (project.images && project.images.length)
-        ? project.images
-        : [project.image];
-
-      mainImage.src = projectImages[0];
-      mainImage.alt = project.title;
-
-      thumbnails.innerHTML = projectImages.map(img => `
-        <img src="${img}" alt="${project.title}" onclick="document.getElementById('modalMainImage').src='${img}'">
-      `).join('');
-
-      document.getElementById('modalCategory').textContent = project.category;
-      document.getElementById('modalTitle').textContent = project.title;
-      document.getElementById('modalSummary').textContent = project.shortSummary;
-      document.getElementById('modalOverview').textContent = project.overview;
-      document.getElementById('modalChallenges').textContent = project.challenges;
-      document.getElementById('modalResults').textContent = project.results;
-      document.getElementById('modalTechSpecs').textContent = project.modaltechspecs;
-
-      document.getElementById('modalResponsibilities').innerHTML = project.responsibilities
-        .map(item => `<li>${item}</li>`).join('');
-
-      document.getElementById('modalSpecs').innerHTML = project.specs
-        .map(([key, value]) => `<div><strong>${key}:</strong> ${value}</div>`).join('');
-
-      document.getElementById('modalTools').innerHTML = project.tools
-        .map(tool => `<span class="tag">${tool}</span>`).join('');
-
-      document.getElementById('modalLinks').innerHTML = project.links
-        .map(link => `<a class="btn" href="${link.url}" target="_blank" rel="noreferrer">${link.label}</a>`)
-        .join('');
-
-      document.getElementById('modalTechSpecs').innerHTML = project.technicalSpecs
-        .map(([key, value]) => `<div><strong>${key}:</strong> ${value}</div>`)
-        .join('');
-
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      document.getElementById("modalImage").src = project.image || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'%3E%3Crect width='1200' height='700' fill='%230a7f73'/%3E%3Ccircle cx='280' cy='210' r='180' fill='%23d89b24' fill-opacity='.36'/%3E%3Ccircle cx='920' cy='470' r='220' fill='%23ffffff' fill-opacity='.18'/%3E%3Ctext x='90' y='385' font-family='Arial' font-size='110' font-weight='800' fill='white'%3EProduct Strategy%3C/text%3E%3C/svg%3E";
+      document.getElementById("modalImage").alt = project.title;
+      document.getElementById("modalCategory").textContent = project.category;
+      document.getElementById("modalTitle").textContent = project.title;
+      document.getElementById("modalBrief").textContent = project.brief;
+      document.getElementById("modalResult").textContent = project.result;
+      document.getElementById("modalSpecs").innerHTML = project.specs.map(([key, value]) => `<div><strong>${key}</strong><span>${value}</span></div>`).join("");
+      document.getElementById("modalResponsibilities").innerHTML = project.responsibilities.map(item => `<li>${item}</li>`).join("");
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
 
-    function hideModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+    function closeProject() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
 
-    closeModal.addEventListener('click', hideModal);
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) hideModal();
+    document.getElementById("closeModal").addEventListener("click", closeProject);
+    modal.addEventListener("click", event => {
+      if (event.target === modal) closeProject();
     });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('open')) hideModal();
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && modal.classList.contains("open")) closeProject();
     });
+
+    function startMissionCanvas() {
+      const canvas = document.getElementById("missionCanvas");
+      if (!canvas) return;
+      const context = canvas.getContext("2d");
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let width = 0;
+      let height = 0;
+      let frame = 0;
+
+      const tools = [
+        { label: "Codex", ring: 0.48, speed: 0.010, color: "#8defd6" },
+        { label: "Ollama", ring: 0.62, speed: -0.007, color: "#d89b24" },
+        { label: "Gemma", ring: 0.78, speed: 0.006, color: "#c95b4a" },
+        { label: "SharePoint", ring: 0.7, speed: -0.005, color: "#8defd6" },
+        { label: "Primavera P6", ring: 0.9, speed: 0.004, color: "#d89b24" },
+        { label: "MS Project", ring: 0.58, speed: -0.009, color: "#9bb8cc" },
+        { label: "Excel", ring: 0.82, speed: 0.008, color: "#8defd6" },
+        { label: "Jira", ring: 0.68, speed: 0.007, color: "#c95b4a" },
+        { label: "ERP", ring: 0.92, speed: -0.004, color: "#9bb8cc" },
+        { label: "Solar PV", ring: 0.52, speed: 0.011, color: "#d89b24" },
+        { label: "BLDC", ring: 0.74, speed: -0.006, color: "#8defd6" },
+        { label: "PowerPoint", ring: 0.86, speed: 0.005, color: "#c95b4a" }
+      ];
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        width = rect.width;
+        height = rect.height;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function draw() {
+        context.clearRect(0, 0, width, height);
+        const cx = width / 2;
+        const cy = height * 0.35;
+        const radius = Math.min(width, height) * 0.28;
+        const sweep = prefersReduced ? 0.8 : frame * 0.018;
+
+        context.strokeStyle = "rgba(255,255,255,0.16)";
+        context.lineWidth = 1;
+        for (let ring = 1; ring <= 3; ring += 1) {
+          context.beginPath();
+          context.arc(cx, cy, radius * ring / 3, 0, Math.PI * 2);
+          context.stroke();
+        }
+
+        context.strokeStyle = "rgba(141,239,214,0.52)";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(cx, cy);
+        context.lineTo(cx + Math.cos(sweep) * radius, cy + Math.sin(sweep) * radius);
+        context.stroke();
+
+        const centerPulse = prefersReduced ? 0 : Math.sin(frame * 0.045) * 4;
+        context.fillStyle = "rgba(141,239,214,0.13)";
+        context.beginPath();
+        context.arc(cx, cy, 58 + centerPulse, 0, Math.PI * 2);
+        context.fill();
+        context.fillStyle = "rgba(141,239,214,0.95)";
+        context.beginPath();
+        context.arc(cx, cy, 8, 0, Math.PI * 2);
+        context.fill();
+        context.fillStyle = "rgba(255,255,255,0.95)";
+        context.font = "900 13px Inter, Arial";
+        context.textAlign = "center";
+        context.fillText("Judgment", cx, cy + 31);
+
+        tools.forEach((tool, index) => {
+          const angle = -Math.PI / 2 + index * (Math.PI * 2 / tools.length) + (prefersReduced ? 0 : frame * tool.speed);
+          const orbit = radius * tool.ring;
+          const x = cx + Math.cos(angle) * orbit;
+          const y = cy + Math.sin(angle) * orbit * 0.72;
+          const padX = 9;
+          context.font = "800 11px Inter, Arial";
+          const chipWidth = context.measureText(tool.label).width + padX * 2;
+          const chipHeight = 27;
+
+          context.strokeStyle = "rgba(255,255,255,0.12)";
+          context.lineWidth = 1;
+          context.beginPath();
+          context.moveTo(cx, cy);
+          context.lineTo(x, y);
+          context.stroke();
+
+          context.fillStyle = "rgba(24,33,29,0.78)";
+          context.strokeStyle = tool.color;
+          context.lineWidth = 1;
+          context.beginPath();
+          context.roundRect(x - chipWidth / 2, y - chipHeight / 2, chipWidth, chipHeight, 7);
+          context.fill();
+          context.stroke();
+
+          context.fillStyle = tool.color;
+          context.beginPath();
+          context.arc(x - chipWidth / 2 + 10, y, 3, 0, Math.PI * 2);
+          context.fill();
+
+          context.fillStyle = "rgba(255,255,255,0.95)";
+          context.font = "800 11px Inter, Arial";
+          context.textAlign = "left";
+          context.fillText(tool.label, x - chipWidth / 2 + 18, y + 4);
+        });
+
+        frame += 1;
+        if (!prefersReduced) requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener("resize", resize);
+      draw();
+    }
 
     renderFilters();
     renderProjects();
+    startMissionCanvas();
   </script>
-
-  <!--
-    HOW TO ADD A NEW PROJECT
-
-    1. Put a new image in the images folder, for example:
-       images/project-5.jpg
-
-    2. Copy one project object inside the "projects" array in the script section.
-
-    3. Change these fields:
-       - title
-       - category
-       - filter
-       - image
-       - shortSummary
-       - overview
-       - responsibilities
-       - challenges
-       - results
-       - specs
-       - previewSpecs
-       - tools
-       - links
-
-    4. Save and push to GitHub.
-
-    RECOMMENDED GITHUB PAGES STRUCTURE
-
-    /index.html
-    /resume.pdf
-    /images/project-1.jpg
-    /images/project-2.jpg
-    /images/project-3.jpg
-    /images/project-4.jpg
-
-    CUSTOMIZATION NOTES
-
-    - Replace all placeholder links like GitHub, LinkedIn, email, and resume.pdf
-    - Keep cover images large and high quality
-    - Write each project in project manager language:
-      objective, stakeholders, timeline, risks, actions, outcome
-    - Use this website URL in your resume header and LinkedIn featured section
-  -->
 </body>
 </html>
