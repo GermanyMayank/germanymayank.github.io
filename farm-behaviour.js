@@ -18,5 +18,13 @@ window.FarmBehaviour = (() => {
     return {value:0,direction:-1,moving:false,loading:Math.sin((t-.85)/.15*Math.PI)};
   }
   function approach(distance){return distance>2&&distance<21;}
-  return {clamp,lerp,createReaction,react,active,shuttle,approach};
+  function heading(time,duration=32){
+    const t=((time%duration)+duration)%duration/duration;
+    const smooth=v=>v*v*(3-2*v);
+    if(t<.35)return Math.PI;
+    if(t<.5)return Math.PI+Math.PI*smooth((t-.35)/.15);
+    if(t<.85)return Math.PI*2;
+    return Math.PI*2+Math.PI*smooth((t-.85)/.15);
+  }
+  return {clamp,lerp,createReaction,react,active,shuttle,heading,approach};
 })();
