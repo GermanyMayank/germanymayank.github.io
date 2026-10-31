@@ -4,8 +4,8 @@ window.FarmBehaviour = (() => {
   const lerp=(a,b,t)=>a+(b-a)*t;
   function createReaction(){return {count:0,last:-100,until:0,level:0};}
   function react(state,time){
-    state.count=time-state.last>9?1:Math.min(3,state.count+1);
-    state.last=time;state.until=time+3.8;state.level=state.count;
+    state.count=time-state.last>9?1:Math.min(6,state.count+1);
+    state.last=time;state.until=time+3.8;state.level=Math.min(3,state.count);
     return state.level;
   }
   function active(state,time){return time<state.until;}

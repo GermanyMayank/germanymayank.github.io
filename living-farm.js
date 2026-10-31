@@ -55,12 +55,15 @@ window.createLivingFarm = function(T) {
   }
   function register(name,g,d,phrases,greeting){
     const a={id:'actor-'+actors.length,name,g,d,phrases,greeting,reaction:B.createReaction(),clock:0,lastTime:0,greeted:false,update(){}};
-    const button=document.createElement('button');button.type='button';button.className='actor-hotspot';button.hidden=true;button.setAttribute('aria-label','Interact with '+name);button.title='Say hello to '+name;button.innerHTML='<span class="actor-cross">+</span><span class="actor-name"></span>';button.querySelector('.actor-name').textContent=name;
+    const button=document.createElement('button');button.type='button';button.className='actor-hotspot';button.hidden=true;button.setAttribute('aria-label','Interact with '+name);button.textContent='Say hello to '+name;
     button.addEventListener('click',()=>interact(a));actorLayer.append(button);a.button=button;
+    g.userData.actor=a;
     g.traverse(o=>{if(o.isMesh)o.userData.actor=a;});actors.push(a);return a;
   }
   function interact(a){
-    const level=B.react(a.reaction,time);say(a,a.phrases[level-1]);
+    const level=B.react(a.reaction,time);
+    const line=a.reaction.count===5?'Fine. You are on the team. Safety briefing starts now.':a.phrases[level-1];
+    say(a,line);if(a.human)a.g.rotation.y=Math.atan2(camera.position.x-a.g.position.x,camera.position.z-a.g.position.z);
     window.dispatchEvent(new Event('farm-interaction'));
   }
   function human(parent,x,z,vest='#e88837',skin='#c79874'){
@@ -76,7 +79,7 @@ window.createLivingFarm = function(T) {
     const legs=[group(body,-.14,.78,0),group(body,.14,.78,0)];
     legs.forEach(l=>{box(l,'#324d54',0,-.30,0,.20,.61,.22);box(l,'#26352f',0,-.63,.055,.23,.16,.36);});
     shadow(g,0,0,1.3,1.1);
-    function pose(t,{walk=false,wave=false,angry=false,tablet=false}={}){
+    function pose(t,{walk=false,wave=false,angry=false,tablet=false,stomp=false}={}){
       const swing=walk?Math.sin(t*6.2)*.52:0;
       legs[0].rotation.x=swing;legs[1].rotation.x=-swing;
       arms[0].rotation.set(-swing*.7,0,0);arms[1].rotation.set(swing*.7,0,0);
@@ -86,6 +89,8 @@ window.createLivingFarm = function(T) {
       else head.rotation.y=Math.sin(t*.6)*.06;
       brows[0].rotation.z=angry?-.35:0;brows[1].rotation.z=angry?.35:0;
       body.position.y=walk?Math.abs(Math.sin(t*6.2))*.035:Math.sin(t*1.8)*.008;
+      body.rotation.z=stomp?Math.sin(t*15)*.045:0;
+      if(stomp){legs[0].rotation.x=Math.max(0,Math.sin(t*10))*.25;body.position.y+=Math.abs(Math.sin(t*10))*.045;}
     }
     return {g,body,head,arms,legs,pose};
   }
@@ -94,13 +99,20 @@ window.createLivingFarm = function(T) {
     const a=register(name,h.g,d,phrases,greeting);a.human=h;
     if(mode==='tablet'||mode==='supervisor')box(h.body,'#344f56',0,1.10,.4,.32,.24,.045);
     if(mode==='clean'){box(h.arms[1],'#93a19a',0,-.75,0,.035,1.1,.035);box(h.arms[1],'#c3d8d3',0,-1.3,0,.38,.07,.18);}
+    if(mode==='welcome'){
+      const tools=group(h.arms[0],0,-.59,0);box(tools,'#42665d',0,0,0,.40,.25,.23);box(tools,'#263e37',0,.16,0,.17,.07,.045);
+      box(h.arms[1],'#385363',0,-.38,.13,.19,.28,.035);
+    }
     const baseX=x;
     a.update=(t,reacting)=>{
       const angry=reacting&&a.reaction.level>=2;
-      const greet=camDistance>d-21&&camDistance<d+2;
-      h.pose(reacting?time:t,{walk:mode==='walk'&&!reacting,wave:(mode==='welcome'&&greet&&!angry)||(reacting&&!angry),angry,tablet:!reacting&&(mode==='tablet'||mode==='supervisor')});
-      if(mode==='walk'){h.g.position.z=-d+Math.sin(t*.28)*2.8;h.g.rotation.y=Math.cos(t*.28)>0?0:Math.PI;}
-      else h.g.rotation.y=x>0?-.35:.35;
+      h.pose(reacting?time:t,{walk:mode==='walk'&&!reacting,wave:reacting&&!angry,angry,stomp:reacting&&a.reaction.level===3,tablet:!reacting&&(mode==='tablet'||mode==='supervisor')});
+      if(!reacting){
+        if(mode==='walk'){h.g.position.z=-d+Math.sin(t*.28)*2.8;h.g.rotation.y=Math.cos(t*.28)>0?0:Math.PI;}
+        else h.g.rotation.y=x>0?Math.PI/2:-Math.PI/2;
+        if(mode==='tablet'||mode==='supervisor'){h.arms[1].rotation.x=-.95+Math.sin(t*2.6)*.13;}
+        if(mode==='welcome'){h.arms[1].rotation.x=-.72+Math.sin(t*1.7)*.12;h.body.rotation.x=Math.sin(t*.65)*.035;}
+      }else h.body.rotation.x=0;
       if(mode==='clean'&&!reacting)h.arms[1].rotation.x=-1.0+Math.sin(t*1.8)*.35;
       h.g.position.x=mode==='welcome'&&d===8&&width<760?3.05:baseX;
       if(mode==='welcome'&&d===8)h.g.position.z=width<760?-12:-8;
@@ -123,7 +135,7 @@ window.createLivingFarm = function(T) {
   const driver=human(fork,0,.15);driver.g.scale.setScalar(.55);driver.g.position.y=.78;driver.pose(0,{tablet:true});shadow(fork,0,0,2.6,3.8);
   const beacon=ball(fork,new T.MeshBasicMaterial({color:'#ffc86a'}),.4,2.52,-.2,.11);
   const forklift=register('Forklift crew',fork,29,["Precious cargo coming through!","You rang? Again?","Alright, you are on pallet duty now."],"Delivery time! Watch the side lane.");
-  forklift.update=(t,r)=>{const s=B.shuttle(t,30);fork.position.z=-B.lerp(24,41,s.value);fork.position.x=5.8;fork.rotation.y=B.heading(t,30);forks.position.y=.45+s.loading*.65;forkWheels.forEach(w=>w.rotation.x=s.value*28);beacon.scale.setScalar(.09+Math.sin(t*4)*.015);driver.pose(r?time:t,{wave:r,tablet:!r,angry:r&&forklift.reaction.level>1});};
+  forklift.update=(t,r)=>{const s=B.shuttle(t,30),phase=(t%30)/30;fork.position.z=-B.lerp(24,41,s.value);fork.position.x=5.8;fork.rotation.y=B.heading(t,30);forks.position.y=.45+s.loading*.65;pallet.visible=phase<.425||phase>.925;forkWheels.forEach(w=>w.rotation.x=s.value*28);beacon.scale.setScalar(.09+Math.sin(t*4)*.015);driver.pose(r?time:t,{wave:r,tablet:!r,angry:r&&forklift.reaction.level>1});};
   const truck=group(scene,10,0,-35);box(truck,'#486a5c',0,.67,0,2,.45,5);box(truck,'#e4e7d6',0,1.4,1.65,2,1.4,1.6);box(truck,'#557c85',0,1.55,2.47,1.65,.65,.02);
   box(truck,'#ad986f',0,1.0,-.8,1.9,.2,3.2);for(let j=0;j<3;j++)box(truck,'#315268',0,1.18+j*.14,-.8,1.65,.11,2.7);
   for(const x of [-.7,.7])box(truck,'#ffedb6',x,1.0,2.49,.23,.14,.03);
@@ -158,16 +170,29 @@ window.createLivingFarm = function(T) {
   for(let i=0;i<5;i++){const g=group(scene,0,8,-70);const wings=[box(g,'#738674',-.2,0,0,.5,.035,.16),box(g,'#738674',.2,0,0,.5,.035,.16)];birds.push({g,wings,phase:i*1.7});}
   // Exact hit testing respects occlusion by panels and equipment.
   const ray=new T.Raycaster(),point=new T.Vector2(),anchor=new T.Vector3(),headAnchor=new T.Vector3();
-  let pointerStart=null;
+  let pointerStart=null,lastHover=0;
   function fromEvent(e){point.set(e.clientX/width*2-1,-e.clientY/height*2+1);ray.setFromCamera(point,camera);}
   const block='a,button,summary,details,.container,header,footer,.farm-speech,.tour-hud,.site-activity';
   function down(e){if(e.target.closest(block))return;pointerStart={x:e.clientX,y:e.clientY};}
-  function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;fromEvent(e);const hit=ray.intersectObjects(scene.children,true)[0];if(hit?.object.userData.actor)interact(hit.object.userData.actor);}
+  function actorAt(e){
+    fromEvent(e);
+    for(const hit of ray.intersectObjects(scene.children,true)){
+      if(hit.object.material?.transparent)continue;
+      let node=hit.object,actor=null,visible=true;
+      while(node){if(!node.visible)visible=false;if(node.userData.actor)actor=node.userData.actor;node=node.parent;}
+      if(visible)return actor;
+    }
+    return null;
+  }
+  function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;const a=actorAt(e);if(a)interact(a);}
+  function hover(e){if(e.pointerType==='touch'||performance.now()-lastHover<45)return;lastHover=performance.now();document.body.classList.toggle('over-crew',!e.target.closest(block)&&!!actorAt(e));}
+  function cancel(){pointerStart=null;}
   document.addEventListener('pointerdown',down);document.addEventListener('pointerup',up);
+  document.addEventListener('pointermove',hover,{passive:true});document.addEventListener('pointercancel',cancel);
   const contextLost=e=>{e.preventDefault();window.dispatchEvent(new Event('farm-renderer-lost'));};renderer.domElement.addEventListener('webglcontextlost',contextLost);
   function resize(w,h,dpr){width=w;height=h;renderer.setPixelRatio(Math.min(dpr||1,quality,w<760?1.25:1.5));renderer.setSize(w,h);camera.aspect=w/h;camera.fov=w<760?74:56;camera.updateProjectionMatrix();}
   function draw(progress,elapsed,paused){
-    time=elapsed;const previousDistance=camDistance;camDistance=progress*245;
+    time=elapsed;camDistance=progress*245;
     camera.position.set(Math.sin(progress*9)*.08,2.65,-camDistance);camera.lookAt(0,1.1,-camDistance-42);camera.updateMatrixWorld();
     const warmActors=[];
     for(const a of actors){
@@ -176,13 +201,12 @@ window.createLivingFarm = function(T) {
       const delta=Math.min(.1,Math.max(0,time-a.lastTime));a.lastTime=time;
       const reacting=B.active(a.reaction,time);if(!reacting)a.clock+=delta;
       a.update(a.clock,reacting);
-      if(!a.greeted&&B.approach(ahead)&&Math.abs(camDistance-previousDistance)<.5&&!paused&&(!lastSpeech||lastSpeech.until<time)){a.greeted=true;say(a,a.greeting,4.5);}
       warmActors.push(a);
     }
     socks.forEach((s,i)=>{s.rotation.y=Math.sin(time*.7+i)*.16;s.rotation.z=Math.sin(time*1.2+i)*.07;});
     birds.forEach(({g,wings,phase})=>{g.position.set(Math.sin(time*.06+phase)*25,8+Math.sin(time*.15+phase),-camDistance-85);wings[0].rotation.z=Math.sin(time*3+phase)*.35;wings[1].rotation.z=-Math.sin(time*3+phase)*.35;});
     scene.updateMatrixWorld();
-    const placements=[];
+    // Focus-only HTML buttons provide keyboard access, with no visible scene markers.
     const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,.hero-copy h1,.hero-copy .lead,.hero-copy .tag,header,footer,.site-activity,.tour-hud')].map(el=>el.getBoundingClientRect());
     warmActors.sort((a,b)=>Math.abs(a.g.position.z+camDistance)-Math.abs(b.g.position.z+camDistance));
     for(const a of warmActors){
@@ -190,14 +214,13 @@ window.createLivingFarm = function(T) {
       const x=(anchor.x*.5+.5)*width;let y=(-anchor.y*.5+.5)*height;
       let visible=anchor.z>-1&&anchor.z<1&&x>30&&x<width-30&&y>90&&y<height-100&&-a.g.position.z-camDistance>1;
       if(visible){point.set(anchor.x,anchor.y);ray.setFromCamera(point,camera);const hit=ray.intersectObjects([panelBatch],false)[0];if(hit&&hit.distance<camera.position.distanceTo(headAnchor)-.4)visible=false;}
-      if(visible){for(let tries=0;tries<4&&placements.some(p=>Math.hypot(p.x-x,p.y-y)<46);tries++)y-=44;}
       if(visible&&(y<90||blockers.some(r=>x>r.left-16&&x<r.right+16&&y>r.top-16&&y<r.bottom+16)))visible=false;
       a.button.hidden=!visible;
-      if(visible){placements.push({x,y});a.button.style.transform=`translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;a.screen={x,y};}
+      if(visible){a.button.style.transform=`translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;a.screen={x,y};}
     }
     if(lastSpeech&&lastSpeech.until>=time){const {x,y}=lastSpeech.actor.screen&&!lastSpeech.actor.button.hidden?lastSpeech.actor.screen:{x:width*.5,y:height*.78};speech.hidden=false;speech.style.left=Math.max(120,Math.min(width-120,x))+'px';speech.style.top=Math.max(100,y-32)+'px';speech.dataset.mood=lastSpeech.actor.reaction.level>=2?'grumpy':'friendly';}else speech.hidden=true;
     renderer.render(scene,camera);
   }
   document.body.prepend(renderer.domElement);
-  return {resize,draw,actors,setQuality(r){quality=r;resize(width,height,devicePixelRatio);},dispose(){document.removeEventListener('pointerdown',down);document.removeEventListener('pointerup',up);actors.forEach(a=>a.button.remove());renderer.dispose();renderer.domElement.remove();speech.hidden=true;}};
+  return {resize,draw,actors,setQuality(r){quality=r;resize(width,height,devicePixelRatio);},dispose(){document.removeEventListener('pointerdown',down);document.removeEventListener('pointerup',up);document.removeEventListener('pointermove',hover);document.removeEventListener('pointercancel',cancel);document.body.classList.remove('over-crew');actors.forEach(a=>a.button.remove());renderer.dispose();renderer.domElement.remove();speech.hidden=true;}};
 };

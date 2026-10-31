@@ -4,7 +4,7 @@ A static GitHub Pages portfolio with a ground-level, scroll-controlled solar far
 
 ## Living farm
 
-The enhanced world uses pinned Three.js 0.180.0 from jsDelivr. It includes six original jointed workers, a forklift with a lifting pallet, delivery truck, operating crane, control cabin, site office, windsocks, birds and equipment. Workers greet the visitor on approach; repeated clicks progress from friendly to puzzled to grumpy, then cool down. Use “Meet the crew” for a keyboard/mobile interaction alternative. All dialogue is silent text.
+The enhanced world uses pinned Three.js 0.180.0 from jsDelivr. It includes six original jointed workers, a forklift with a lifting pallet, delivery truck, operating crane, control cabin, site office, windsocks, birds and equipment. The crew works quietly until clicked. There are no floating interaction icons, crew menus or automatic greetings. Click a person or vehicle directly: repeated clicks progress from friendly to puzzled to grumpy, then cool down and resume work. A fifth consecutive click reveals a small extra joke. Keyboard users can Tab to focus-only interaction controls and press Enter. All dialogue is silent text.
 
 `farm-behaviour.js` holds reaction and route rules. `living-farm.js` holds the original models and GPU renderer. `solar-tour.js` owns a single time-based animation loop, including pause/reduced-motion handling, hidden-tab suspension and adaptive pixel density. Repeated panels use instancing. No head bob or camera shake. If the CDN or WebGL is unavailable, the existing canvas walking scene remains usable.
 

@@ -42,16 +42,12 @@
   if('ResizeObserver' in window)new ResizeObserver(read).observe(document.querySelector('main'));
   addEventListener('farm-interaction',request);
   addEventListener('farm-renderer-lost',()=>{world?.dispose();world=null;document.body.classList.remove('farm-ready');status.textContent='Walking tour · simple view';request();});
-  function activityMenu(){
-    const list=document.querySelector('#crew-list');
-    world.actors.forEach(a=>{const b=document.createElement('button');b.type='button';b.textContent=a.name;b.addEventListener('click',()=>a.button.click());list.append(b);});
-  }
   update();resize();
   import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js').then(T=>{
     if(disposed)return;
-    world=window.createLivingFarm(T);activityMenu();resize();document.body.classList.add('farm-ready');
-    status.textContent='Living solar farm · tap the crew';request();
-  }).catch(()=>{world?.dispose();world=null;document.body.classList.remove('farm-ready');status.textContent='Walking tour · simple view';document.querySelector('#site-activity').hidden=true;document.querySelector('#actor-layer').hidden=true;request();});
+    world=window.createLivingFarm(T);resize();document.body.classList.add('farm-ready');
+    status.textContent='Living solar farm';request();
+  }).catch(()=>{world?.dispose();world=null;document.body.classList.remove('farm-ready');status.textContent='Walking tour · simple view';document.querySelector('#actor-layer').hidden=true;request();});
   addEventListener('pagehide',e=>{if(!e.persisted){disposed=true;if(frame)cancelAnimationFrame(frame);world?.dispose();}else{previous=0;if(frame)cancelAnimationFrame(frame);frame=0;}});
   addEventListener('pageshow',()=>{previous=0;request();});
 })();
