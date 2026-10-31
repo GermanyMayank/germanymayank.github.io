@@ -36,7 +36,7 @@ window.createLivingFarm = function(T) {
   const panelMat=new T.MeshStandardMaterial({map:texture,color:'#ffffff',roughness:.4,metalness:.24});
   for(let r=0;r<54;r++)for(const side of [-1,1])for(let col=0;col<4;col++){
     const d=8+r*7,x=side*(7.25+col*6.65);
-    if((side===1&&d>17&&d<49)||(side===-1&&d>109&&d<137)||(side===1&&d>224&&d<252))continue;
+    if((side===1&&d>17&&d<49)||(side===-1&&d>137&&d<162)||(side===1&&d>205&&d<234))continue;
     panel.push([x,1.7,-d,5.85,.09,3.45,.27]);
     for(const px of [x-2,x+2])posts.push([px,.74,-d,.09,1.48,.1]);
   }
@@ -48,10 +48,11 @@ window.createLivingFarm = function(T) {
   const actors=[],socks=[],birds=[];
   const actorLayer=document.querySelector('#actor-layer');
   const speech=document.querySelector('#farm-speech');
+  const dialogue=window.CrewStory?.build();
   let width=1,height=1,camDistance=0,time=0,lastSpeech=null,quality=1.5;
-  function say(actor,text,duration=4){
-    lastSpeech={actor,text,until:time+duration};speech.textContent=text;speech.hidden=false;
-    document.querySelector('#farm-live').textContent=actor.name+': '+text;
+  function say(actor,text,duration=11){
+    lastSpeech={actor,text,until:time+duration};
+    if(dialogue)dialogue.open(actor,text);else{speech.textContent=text;speech.hidden=false;document.querySelector('#farm-live').textContent=actor.name+': '+text;}
   }
   function register(name,g,d,phrases,greeting){
     const a={id:'actor-'+actors.length,name,g,d,phrases,greeting,reaction:B.createReaction(),clock:0,lastTime:0,greeted:false,update(){}};
@@ -161,7 +162,20 @@ window.createLivingFarm = function(T) {
   }
   sign(-3.9,13,'MAYANK VEKARIYA','SYSTEMS / ENERGY / EXECUTION');sign(3.9,48,'01 / DELIVERY','GOOD WORK STARTS WITH A PLAN');sign(-3.9,105,'02 / OPERATIONS','EVERY PART HAS A PURPOSE');sign(3.9,185,'03 / IDEAS INTO ACTION','EXPLORE THE PROJECTS');sign(3.9,248,'LET’S CONNECT','THE NEXT CHAPTER STARTS HERE');
   function cabin(x,d,name){const g=group(scene,x,0,-d);box(g,'#e2e2cc',0,1.6,0,5.5,3.2,4);box(g,'#567963',0,3.26,0,5.8,.2,4.3);box(g,'#65858a',-1,1.85,2.02,1.8,1.1,.04);box(g,'#789377',1.5,1.1,2.03,.9,2.2,.05);shadow(g,0,0,7,6);sign(x,d-3,name,'TECHNICAL SITE / AUTHORISED ACCESS');return g;}
-  cabin(-10,121,'CONTROL CABIN');cabin(9,237,'SITE OFFICE');
+  cabin(-10,150,'CONTROL CABIN');cabin(9,221,'SITE OFFICE');
+  function storyBoard(id,x,d,title,note){
+    const g=group(scene,x,0,-d);g.userData.station={stationId:id};
+    for(const xx of [-1.2,1.2])box(g,'#62755d',xx,.85,0,.10,1.7,.10);
+    box(g,'#294e3b',0,2.0,-.03,3.25,1.9,.12);
+    const tex=canvasTexture(512,300,c=>{c.fillStyle='#f0ecd7';c.fillRect(0,0,512,300);c.fillStyle='#294e3b';c.fillRect(0,0,512,38);c.fillStyle='#cad5ba';c.font='15px sans-serif';c.fillText('MAYANK VEKARIYA / FIELD NOTES',22,25);c.fillStyle='#234a36';c.font='bold 35px sans-serif';c.fillText(title,22,105);c.fillStyle='#718266';c.font='19px sans-serif';c.fillText(note,22,155);c.fillStyle='#cf844f';c.fillRect(22,209,176,49);c.fillStyle='#fff8e5';c.font='bold 17px sans-serif';c.fillText('CLICK TO EXPLORE',33,240);});
+    const front=new T.Mesh(new T.PlaneGeometry(3.05,1.72),new T.MeshBasicMaterial({map:tex}));front.position.set(0,2.0,.04);g.add(front);shadow(g,0,0,4,2);
+  }
+  storyBoard('proof',-4.6,39,'COMMISSIONING LOG','Milestones / delivery / results');
+  storyBoard('focus',4.7,75,'THE SITE METHOD','People / quality / coordination');
+  storyBoard('experience',-4.7,110,'PLANNING BOARD','Explore the work behind the work');
+  storyBoard('projects',4.7,145,'CONTROL ROOM','Selected projects / real details');
+  storyBoard('skills',-4.7,180,'THE TOOLKIT','The tools behind the decisions');
+  storyBoard('contact',4.7,215,'THE NEXT CHAPTER','Your next engineer could be here');
   for(let d=111;d<131;d+=5){box(scene,'#c3cbbb',-5,1,-d,1.2,2,.7);box(scene,'#4d7574',-5,1.4,-d+.36,.8,.3,.02);}
   for(let i=0;i<8;i++){const g=group(scene,4.1+i*.9,0,-19);box(g,'#394e41',0,.05,0,.4,.1,.4);mesh(g,'cone','#e28c43',0,.35,0,.16,.6,.16);mesh(g,'cylinder','#f4e8b7',0,.38,0,.105,.1,.105);}
   for(let i=0;i<6;i++){const g=group(scene,8+(i%3)*1.7,0,-20-Math.floor(i/3)*3);box(g,'#a78b5e',0,.15,0,1.3,.2,1);for(let j=0;j<4;j++)box(g,'#315768',0,.3+j*.09,0,1.2,.07,.9);}
@@ -178,13 +192,13 @@ window.createLivingFarm = function(T) {
     fromEvent(e);
     for(const hit of ray.intersectObjects(scene.children,true)){
       if(hit.object.material?.transparent)continue;
-      let node=hit.object,actor=null,visible=true;
-      while(node){if(!node.visible)visible=false;if(node.userData.actor)actor=node.userData.actor;node=node.parent;}
-      if(visible)return actor;
+      let node=hit.object,actor=null,station=null,visible=true;
+      while(node){if(!node.visible)visible=false;if(node.userData.actor)actor=node.userData.actor;if(node.userData.station)station=node.userData.station;node=node.parent;}
+      if(visible)return actor||station;
     }
     return null;
   }
-  function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;const a=actorAt(e);if(a)interact(a);}
+  function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;const a=actorAt(e);if(a?.stationId)document.querySelector('a[href="#'+a.stationId+'"]').click();else if(a)interact(a);}
   function hover(e){if(e.pointerType==='touch'||performance.now()-lastHover<45)return;lastHover=performance.now();document.body.classList.toggle('over-crew',!e.target.closest(block)&&!!actorAt(e));}
   function cancel(){pointerStart=null;}
   document.addEventListener('pointerdown',down);document.addEventListener('pointerup',up);
@@ -218,7 +232,15 @@ window.createLivingFarm = function(T) {
       a.button.hidden=!visible;
       if(visible){a.button.style.transform=`translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;a.screen={x,y};}
     }
-    if(lastSpeech&&lastSpeech.until>=time){const {x,y}=lastSpeech.actor.screen&&!lastSpeech.actor.button.hidden?lastSpeech.actor.screen:{x:width*.5,y:height*.78};speech.hidden=false;speech.style.left=Math.max(120,Math.min(width-120,x))+'px';speech.style.top=Math.max(100,y-32)+'px';speech.dataset.mood=lastSpeech.actor.reaction.level>=2?'grumpy':'friendly';}else speech.hidden=true;
+    if(lastSpeech){
+      if(dialogue?.holding())lastSpeech.until=time+2;
+      const a=lastSpeech.actor,ahead=-a.g.position.z-camDistance;
+      const show=lastSpeech.until>=time&&a.g.visible&&ahead>0&&ahead<45;
+      headAnchor.set(0,a.human?2.05:3.1,0);a.g.localToWorld(headAnchor);anchor.copy(headAnchor).project(camera);
+      const sx=(anchor.x*.5+.5)*width,sy=(-anchor.y*.5+.5)*height;
+      if(dialogue)dialogue.render(a,sx,sy,width,height,show&&anchor.z>-1&&anchor.z<1);
+      else speech.hidden=!show;
+    }
     renderer.render(scene,camera);
   }
   document.body.prepend(renderer.domElement);
