@@ -102,7 +102,8 @@ window.createLivingFarm = function(T) {
       if(mode==='walk'){h.g.position.z=-d+Math.sin(t*.28)*2.8;h.g.rotation.y=Math.cos(t*.28)>0?0:Math.PI;}
       else h.g.rotation.y=x>0?-.35:.35;
       if(mode==='clean'&&!reacting)h.arms[1].rotation.x=-1.0+Math.sin(t*1.8)*.35;
-      h.g.position.x=baseX;
+      h.g.position.x=mode==='welcome'&&d===8&&width<760?3.05:baseX;
+      if(mode==='welcome'&&d===8)h.g.position.z=width<760?-12:-8;
     };return a;
   }
   worker('Aarav · site host',3.45,8,'welcome',["Hi! Welcome aboard. Scroll to explore!","Yes, hello again! I do have a day job.","Alright, alright! The solar farm needs me too."],"Hi! Welcome aboard. Take a look around!");
@@ -164,7 +165,7 @@ window.createLivingFarm = function(T) {
   function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;fromEvent(e);const hit=ray.intersectObjects(scene.children,true)[0];if(hit?.object.userData.actor)interact(hit.object.userData.actor);}
   document.addEventListener('pointerdown',down);document.addEventListener('pointerup',up);
   const contextLost=e=>{e.preventDefault();window.dispatchEvent(new Event('farm-renderer-lost'));};renderer.domElement.addEventListener('webglcontextlost',contextLost);
-  function resize(w,h,dpr){width=w;height=h;renderer.setPixelRatio(Math.min(dpr||1,quality,w<760?1.25:1.5));renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  function resize(w,h,dpr){width=w;height=h;renderer.setPixelRatio(Math.min(dpr||1,quality,w<760?1.25:1.5));renderer.setSize(w,h);camera.aspect=w/h;camera.fov=w<760?74:56;camera.updateProjectionMatrix();}
   function draw(progress,elapsed,paused){
     time=elapsed;const previousDistance=camDistance;camDistance=progress*245;
     camera.position.set(Math.sin(progress*9)*.08,2.65,-camDistance);camera.lookAt(0,1.1,-camDistance-42);camera.updateMatrixWorld();
@@ -182,7 +183,7 @@ window.createLivingFarm = function(T) {
     birds.forEach(({g,wings,phase})=>{g.position.set(Math.sin(time*.06+phase)*25,8+Math.sin(time*.15+phase),-camDistance-85);wings[0].rotation.z=Math.sin(time*3+phase)*.35;wings[1].rotation.z=-Math.sin(time*3+phase)*.35;});
     scene.updateMatrixWorld();
     const placements=[];
-    const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,header,footer,.site-activity,.tour-hud')].map(el=>el.getBoundingClientRect());
+    const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,.hero-copy h1,.hero-copy .lead,.hero-copy .tag,header,footer,.site-activity,.tour-hud')].map(el=>el.getBoundingClientRect());
     warmActors.sort((a,b)=>Math.abs(a.g.position.z+camDistance)-Math.abs(b.g.position.z+camDistance));
     for(const a of warmActors){
       headAnchor.set(0,a.human?2.05:3.1,0);a.g.localToWorld(headAnchor);anchor.copy(headAnchor).project(camera);
