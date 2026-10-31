@@ -198,7 +198,18 @@ window.createLivingFarm = function(T) {
     }
     return null;
   }
-  function up(e){if(!pointerStart)return;const start=pointerStart;pointerStart=null;if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;const a=actorAt(e);if(a?.stationId)document.querySelector('a[href="#'+a.stationId+'"]').click();else if(a)interact(a);}
+  function up(e){
+    if(!pointerStart)return;const start=pointerStart;pointerStart=null;
+    if(Math.hypot(e.clientX-start.x,e.clientY-start.y)>8||e.target.closest(block))return;
+    let a=actorAt(e);
+    // A small invisible touch tolerance makes tiny characters comfortable to tap.
+    if(!a&&(e.pointerType==='touch'||width<760)){
+      for(const [dx,dy] of [[-12,0],[12,0],[0,-12],[0,12]]){
+        a=actorAt({clientX:e.clientX+dx,clientY:e.clientY+dy});if(a)break;
+      }
+    }
+    if(a?.stationId)document.querySelector('a[href="#'+a.stationId+'"]').click();else if(a)interact(a);
+  }
   function hover(e){if(e.pointerType==='touch'||performance.now()-lastHover<45)return;lastHover=performance.now();document.body.classList.toggle('over-crew',!e.target.closest(block)&&!!actorAt(e));}
   function cancel(){pointerStart=null;}
   document.addEventListener('pointerdown',down);document.addEventListener('pointerup',up);
