@@ -5,8 +5,11 @@
 | Release | Commit | Recovery reference | State |
 | --- | --- | --- | --- |
 | Solar farm v5 | d9dc99f1fb15537c5ab679ceaa9e3e6377141d40 | release/solar-farm-v5 | Deployed; direct click responses verified; floating markers and automatic greetings removed |
+| Crew story v6 | aa02e8b2b9e79c3693e9a677f8d7319511e309c6 | release/crew-story-v6 | Deployed; five CI tests passed; preview inspected on desktop and phone; live crew speech verified |
 
 Keep this checkpoint unchanged. Create a new named checkpoint for each later verified stable release.
+
+Release 6 evidence: feature PR #5; isolated preview PR #4; successful Pages deployment for aa02e8b2b9e79c3693e9a677f8d7319511e309c6. Checked direct worker interaction, portfolio action, close/Escape, responsive dialogue and captured browser errors. Speech geometry and phone tap tolerance were refined after preview review. These checks are not a claim of exhaustive device coverage or guaranteed uptime.
 
 ## Definition of ready to release
 
