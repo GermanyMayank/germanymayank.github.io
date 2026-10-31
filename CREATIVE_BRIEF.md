@@ -26,4 +26,4 @@ Entrance sign for the introduction; a planning board for experience; commissioni
 - No floating plus markers, automatic greetings, visible crew menus, automatic audio or forced navigation.
 - Existing motion controls, fallback, resume and contact routes remain functional.
 
-This brief records the direction. It does not mean the world-integrated portfolio panels or advocacy dialogue have shipped yet.
+The release 6 implementation uses `crew-story.js`, matching site boards and readable semantic panels. See `RELEASE_PLAN.md` for the scope, acceptance criteria and later ideas; deployment verification determines when a version becomes a stable release.

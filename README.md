@@ -8,7 +8,11 @@ The enhanced world uses pinned Three.js 0.180.0 from jsDelivr. It includes six o
 
 `farm-behaviour.js` holds reaction and route rules. `living-farm.js` holds the original models and GPU renderer. `solar-tour.js` owns a single time-based animation loop, including pause/reduced-motion handling, hidden-tab suspension and adaptive pixel density. Repeated panels use instancing. No head bob or camera shake. If the CDN or WebGL is unavailable, the existing canvas walking scene remains usable.
 
-Run `node check.mjs` for content, fallback projection and actor-behaviour checks. All models are created in code; no third-party character assets or model-generation service is used.
+Run `node --test test.mjs` for content, fallback projection, actor behaviour and dialogue placement checks. All models are created in code; no third-party character assets or model-generation service is used.
+
+## Guided site experience
+
+`crew-story.js` holds the nine fictional host profiles, related portfolio actions and speech-card placement rules. Click a worker or vehicle to open a short conversation; the close control and Escape dismiss it. Hover/focus gives more reading time. Speech tracks the speaker and avoids key content where space allows. Six matching site boards introduce the existing content sections and offer clickable 3D destinations without adding floating markers. Desktop and phone layouts retain stable, semantic HTML for reading.
 
 ## Edit content
 

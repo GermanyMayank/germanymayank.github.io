@@ -14,7 +14,8 @@
     const next=stops[i+1]??document.documentElement.scrollHeight-innerHeight*.65;
     const fraction=Math.max(0,Math.min(1,(y-stops[i])/Math.max(1,next-stops[i])));
     target=Math.max(0,Math.min(1,(i+fraction)/stops.length));
-    if(i!==active){active=i;dots.forEach((d,j)=>d.setAttribute('aria-current',String(j===i)));label.textContent=sections[i].dataset.stop||sections[i].id;}
+    let visibleChapter=0;while(visibleChapter<stops.length-1&&scrollY+innerHeight*.22>=stops[visibleChapter+1])visibleChapter++;
+    if(visibleChapter!==active){active=visibleChapter;dots.forEach((d,j)=>d.setAttribute('aria-current',String(j===active)));label.textContent=sections[active].dataset.stop||sections[active].id;}
     bar.style.transform='scaleX('+target+')';request();
   }
   function render(stamp){
