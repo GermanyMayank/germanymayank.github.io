@@ -3,564 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mayank Vekariya | Renewable Energy Site Execution</title>
-  <meta name="description" content="Portfolio of Mayank Vekariya, focused on renewable energy site coordination, HSE awareness, project controls, contractor coordination, technical documentation, and field execution." />
+  <title>Mayank Vekariya | A Walk Through My Engineering World</title>
+  <meta name="description" content="Explore Mayank Vekariya’s renewable energy experience, engineering projects and skills through an interactive solar farm walking tour.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%230a7f73'/%3E%3Cpath d='M14 42V18h8l10 13 10-13h8v24h-8V30L32 43 22 30v12z' fill='white'/%3E%3C/svg%3E" />
-  <style>
-    :root {
-      --ink: #1e2924;
-      --muted: #63716a;
-      --paper: #f6f7f2;
-      --surface: #ffffff;
-      --soft: #edf3ef;
-      --line: #d8e0d8;
-      --green: #0a7f73;
-      --green-dark: #075e56;
-      --gold: #b7791f;
-      --steel: #4e6674;
-      --shadow: 0 14px 34px rgba(30, 41, 36, 0.08);
-      --radius: 8px;
-      --max: 1080px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 36px));
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid var(--line);
-      background: rgba(246, 247, 242, 0.96);
-      backdrop-filter: blur(10px);
-    }
-
-    .nav-inner {
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      display: grid;
-      gap: 1px;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    .brand span {
-      color: var(--green);
-      font-size: 0.76rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 4px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .nav-links a {
-      padding: 8px 10px;
-      border-radius: var(--radius);
-    }
-
-    .nav-links a:hover {
-      color: var(--ink);
-      background: var(--soft);
-    }
-
-    .hero {
-      padding: 72px 0 56px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
-      gap: 38px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      color: var(--green-dark);
-      font-size: 0.85rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      max-width: 820px;
-      margin-bottom: 20px;
-      font-size: 3.8rem;
-      line-height: 1.04;
-    }
-
-    .lead {
-      max-width: 700px;
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 1.14rem;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
-    }
-
-    .btn {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 16px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      color: var(--ink);
-      font-weight: 800;
-      box-shadow: 0 8px 20px rgba(30, 41, 36, 0.06);
-    }
-
-    .btn.primary {
-      border-color: var(--green);
-      background: var(--green);
-      color: #ffffff;
-    }
-
-    .hero-photo {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-photo img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-    }
-
-    .hero-note {
-      padding: 18px;
-    }
-
-    .hero-note strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 1rem;
-    }
-
-    .hero-note p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .stats {
-      border-block: 1px solid var(--line);
-      background: var(--surface);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .stat {
-      min-height: 132px;
-      padding: 24px 20px;
-      border-right: 1px solid var(--line);
-    }
-
-    .stat:last-child {
-      border-right: 0;
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--green-dark);
-      font-size: 2rem;
-      line-height: 1;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-
-    section {
-      padding: 64px 0;
-    }
-
-    .section-head {
-      max-width: 760px;
-      margin-bottom: 28px;
-    }
-
-    .kicker {
-      margin-bottom: 8px;
-      color: var(--green-dark);
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    h2 {
-      margin-bottom: 12px;
-      font-size: 2.2rem;
-      line-height: 1.12;
-    }
-
-    .section-copy {
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 1.02rem;
-    }
-
-    .focus-grid,
-    .project-grid,
-    .skills-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .focus-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .focus-card,
-    .skill-card,
-    .project-card,
-    .timeline-item {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: 0 8px 22px rgba(30, 41, 36, 0.04);
-    }
-
-    .focus-card,
-    .skill-card {
-      padding: 20px;
-    }
-
-    .focus-card .number {
-      color: var(--gold);
-      font-weight: 900;
-    }
-
-    .focus-card h3,
-    .skill-card h3,
-    .project-card h3 {
-      margin: 8px 0 8px;
-      font-size: 1.05rem;
-      line-height: 1.25;
-    }
-
-    .focus-card p,
-    .project-card p,
-    .skill-card li {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .focus-card p,
-    .project-card p {
-      margin-bottom: 0;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 14px;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 170px minmax(0, 1fr);
-      gap: 18px;
-      padding: 22px;
-    }
-
-    .timeline-date {
-      color: var(--steel);
-      font-size: 0.92rem;
-      font-weight: 800;
-    }
-
-    .timeline-item h3 {
-      margin-bottom: 7px;
-      font-size: 1.08rem;
-    }
-
-    .timeline-item p {
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .project-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .project-card {
-      overflow: hidden;
-    }
-
-    .project-card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      background: var(--soft);
-    }
-
-    .project-body {
-      padding: 18px;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 14px;
-    }
-
-    .tag-row span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 0 9px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--soft);
-      color: var(--green-dark);
-      font-size: 0.78rem;
-      font-weight: 800;
-    }
-
-    .source-note {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .source-note a {
-      color: var(--green-dark);
-      font-weight: 800;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    .skills-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .skill-card ul {
-      display: grid;
-      gap: 8px;
-      margin: 12px 0 0;
-      padding-left: 18px;
-    }
-
-    .contact {
-      padding-bottom: 80px;
-    }
-
-    .contact-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 24px;
-      align-items: center;
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--green-dark);
-      color: #ffffff;
-    }
-
-    .contact-panel .kicker,
-    .contact-panel .section-copy {
-      color: rgba(255, 255, 255, 0.82);
-    }
-
-    .contact-panel h2 {
-      margin-bottom: 8px;
-    }
-
-    .contact-panel .btn {
-      border-color: rgba(255, 255, 255, 0.3);
-      background: #ffffff;
-      color: var(--green-dark);
-    }
-
-    @media (max-width: 900px) {
-      .hero-grid,
-      .contact-panel {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 2.8rem;
-      }
-
-      .stats-grid,
-      .focus-grid,
-      .project-grid,
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        width: min(100% - 28px, var(--max));
-      }
-
-      .nav-inner {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 14px 0;
-      }
-
-      .nav-links {
-        justify-content: flex-start;
-      }
-
-      .hero,
-      section {
-        padding: 44px 0;
-      }
-
-      h1 {
-        font-size: 2.05rem;
-      }
-
-      h2 {
-        font-size: 1.7rem;
-      }
-
-      .lead {
-        font-size: 1rem;
-      }
-
-      .button-row .btn {
-        width: 100%;
-      }
-
-      .stats-grid,
-      .focus-grid,
-      .project-grid,
-      .skills-grid,
-      .timeline-item {
-        grid-template-columns: 1fr;
-      }
-
-      .stat {
-        min-height: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .stat:last-child {
-        border-bottom: 0;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="solar-tour.css?v=2">
 </head>
-<body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top">Mayank Vekariya<span>Renewable Energy Site Execution</span></a>
-      <div class="nav-links" aria-label="Main navigation">
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-      </div>
-    </div>
-  </nav>
+<body><a class="skip" href="#experience">Skip tour and explore experience</a><canvas id="solar-scene" aria-hidden="true"></canvas><div class="atmosphere" aria-hidden="true"></div>
+  <header class="navigation"><a class="brand" href="#top">MV<span>Mayank Vekariya<small>Engineering · Energy · Execution</small></span></a><nav aria-label="Main navigation"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="Resume.pdf" target="_blank" rel="noopener">Résumé ↗</a><a class="contact-link" href="#contact">Let’s connect ↗</a></nav></header>
 
   <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <p class="eyebrow">Germany-based | Renewable projects | HSE awareness</p>
-          <h1>Practical project execution for renewable energy sites.</h1>
-          <p class="lead">
-            Electrical engineer and project manager with 4+ years of hands-on renewable and industrial project experience. I keep site work clear across schedules, contractors, suppliers, HSE requirements, technical documentation, and commissioning handovers.
-          </p>
-          <div class="button-row">
-            <a class="btn primary" href="#projects">View Projects</a>
-            <a class="btn" href="Resume.pdf" target="_blank" rel="noreferrer">View Resume</a>
-            <a class="btn" href="mailto:germanymayank@gmail.com">Email</a>
-          </div>
-        </div>
+    <section class="hero" id="welcome" data-stop="Welcome"><div class="container hero-copy"><p class="tag">WELCOME TO MY ENGINEERING WORLD</p><h1>Good engineering.<br><em>A clearer path forward.</em></h1><p class="lead">I’m Mayank. Take a walk through my experience in renewable energy, technical projects and field execution.</p><div class="button-row"><a class="btn primary" href="#experience">Explore my experience <span>↘</span></a><a class="btn quiet" href="Resume.pdf" target="_blank" rel="noopener">View résumé ↗</a></div><a class="walk-prompt" href="#proof"><span>↓</span> Scroll to walk between the solar arrays</a></div></section>
 
-        <aside class="hero-photo" aria-label="Renewable energy project preview">
-          <img src="images/project-1.jpg" alt="Solar PV project site" />
-          <div class="hero-note">
-            <strong>From planning to handover</strong>
-            <p>Focused on safe execution, practical risk control, clear reporting, and steady coordination between technical teams and stakeholders.</p>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <div class="stats" id="proof">
+    <section class="stats right" id="proof" data-stop="Track record"><div class="container"><p class="kicker">01 / TRACK RECORD</p><h2>Experience you can<br><em>build on.</em></h2>
       <div class="container stats-grid">
         <div class="stat"><strong>6</strong><span>renewable project sites coordinated from delivery to commissioning</span></div>
         <div class="stat"><strong>0</strong><span>safety incidents recorded across HSE-aware site work</span></div>
         <div class="stat"><strong>EUR 500K</strong><span>combined project budgets controlled within 5% of target</span></div>
         <div class="stat"><strong>15+</strong><span>supply-chain and schedule risks resolved during shortages</span></div>
-      </div>
-    </div>
+      </div></div></section>
 
-    <section id="focus">
+    <section id="focus" data-stop="Approach">
       <div class="container">
         <div class="section-head">
           <p class="kicker">Focus</p>
@@ -593,7 +55,7 @@
       </div>
     </section>
 
-    <section id="experience">
+    <section id="experience" class="right" data-stop="Experience">
       <div class="container">
         <div class="section-head">
           <p class="kicker">Experience</p>
@@ -634,7 +96,7 @@
       </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" data-stop="Projects">
       <div class="container">
         <div class="section-head">
           <p class="kicker">Projects</p>
@@ -642,9 +104,9 @@
           <p class="section-copy">A smaller set of projects, chosen for the skills that matter most on technical construction, renewable energy, and hands-on electrical engineering work: safety, sequencing, reporting, and handover discipline.</p>
         </div>
 
-        <div class="project-grid">
+        <details class="project-gallery"><summary>Explore all 8 projects & case studies <span>+</span></summary><div class="project-grid">
           <article class="project-card">
-            <img src="images/project-1.jpg" alt="Ground-mounted solar PV installation" />
+            <img loading="lazy" decoding="async" src="images/project-1.jpg" alt="Ground-mounted solar PV installation" />
             <div class="project-body">
               <h3>5 MW Solar PV Plant Execution</h3>
               <p>Coordinated civil, electrical, and installation activity across a utility-scale solar site with daily progress tracking, issue follow-up, and safety-aware work sequencing.</p>
@@ -653,7 +115,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/project-2.jpg" alt="Rooftop solar installation" />
+            <img loading="lazy" decoding="async" src="images/project-2.jpg" alt="Rooftop solar installation" />
             <div class="project-body">
               <h3>500 kW Rooftop Solar Installation</h3>
               <p>Managed execution coordination where access, weather, working-at-height safety, toolbox discipline, and installation sequence had to be controlled tightly.</p>
@@ -662,7 +124,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/project-3.jpg" alt="Solar tracker deployment" />
+            <img loading="lazy" decoding="async" src="images/project-3.jpg" alt="Solar tracker deployment" />
             <div class="project-body">
               <h3>Solar Farm Tracker Deployment</h3>
               <p>Supported field coordination across parallel work zones, with attention to alignment checks, sequencing, and rework reduction.</p>
@@ -671,7 +133,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/project-5.jpg" alt="Solar-powered water pump deployment" />
+            <img loading="lazy" decoding="async" src="images/project-5.jpg" alt="Solar-powered water pump deployment" />
             <div class="project-body">
               <h3>Solar-Powered Water Pump Deployment</h3>
               <p>Supported configuration and deployment planning for off-grid solar pumping systems, balancing reliability, cost, and remote-site constraints.</p>
@@ -680,7 +142,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/solar-canal-gujarat.jpg" alt="Canal-top solar panels installed above a canal in Gujarat" />
+            <img loading="lazy" decoding="async" src="images/solar-canal-gujarat.jpg" alt="Canal-top solar panels installed above a canal in Gujarat" />
             <div class="project-body">
               <h3>Solar Canal Infrastructure Review</h3>
               <p>Analysed canal-top solar as a dual-use infrastructure concept: PV generation above canals can reduce land use, limit evaporation, improve panel cooling, and create new maintenance and structure-cost challenges.</p>
@@ -690,7 +152,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/project-6.jpg" alt="Field operations reporting dashboard" />
+            <img loading="lazy" decoding="async" src="images/project-6.jpg" alt="Field operations reporting dashboard" />
             <div class="project-body">
               <h3>Field Operations Dashboard</h3>
               <p>Built an Excel reporting dashboard that turned daily site updates, delays, dependencies, safety notes, and issues into management visibility.</p>
@@ -699,7 +161,7 @@
           </article>
 
           <article class="project-card">
-            <img src="images/electric-bike-conversion.png" alt="Electric motor fitted to a converted motorcycle frame" />
+            <img loading="lazy" decoding="async" src="images/electric-bike-conversion.png" alt="Electric motor fitted to a converted motorcycle frame" />
             <div class="project-body">
               <h3>Petrol Bike to Electric Conversion</h3>
               <p>Converted a Bajaj Pulsar 150 platform by removing the petrol engine, fitting an electric drive motor, and designing a high-capacity lithium battery pack from tested rescued laptop cells around an 80 km/h top-speed and 250 km range target.</p>
@@ -708,18 +170,18 @@
           </article>
 
           <article class="project-card">
-            <img src="images/project-4-1.jpg" alt="BLDC motor prototype" />
+            <img loading="lazy" decoding="async" src="images/project-4-1.jpg" alt="BLDC motor prototype" />
             <div class="project-body">
               <h3>BLDC Motor Prototype</h3>
               <p>Developed a working electromechanical prototype through design, winding, assembly, integration, and validation testing.</p>
               <div class="tag-row"><span>Electrical</span><span>Prototype</span><span>Testing</span></div>
             </div>
           </article>
-        </div>
+        </div></details>
       </div>
     </section>
 
-    <section id="skills">
+    <section id="skills" class="right" data-stop="Toolkit">
       <div class="container">
         <div class="section-head">
           <p class="kicker">Skills</p>
@@ -772,7 +234,7 @@
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" data-stop="Connect">
       <div class="container">
         <div class="contact-panel">
           <div>
@@ -789,5 +251,5 @@
       </div>
     </section>
   </main>
-</body>
+<footer><span>Mayank Vekariya · Engineering with perspective</span><a href="#top">Back to the beginning ↑</a></footer><nav class="wayfinder" aria-label="Tour chapters"></nav><div class="tour-hud"><div class="location"><span class="status-dot"></span><strong id="chapter-label">Welcome</strong><span class="distance"><b id="distance">0</b> m into the journey</span></div><button id="motion-toggle" type="button" aria-pressed="false">Pause motion</button></div><div class="tour-progress" aria-hidden="true"></div><noscript><p class="noscript">Explore the portfolio below. The animated walking tour requires JavaScript.</p></noscript><script src="solar-scene.js?v=2"></script><script src="solar-tour.js?v=2"></script></body>
 </html>
