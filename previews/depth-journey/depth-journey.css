@@ -52,5 +52,5 @@ body:not(.depth-enabled) .container{visibility:visible!important;opacity:1!impor
  .atmosphere,.farm-ready .atmosphere,body.journey-right .atmosphere{background:linear-gradient(90deg,#edf1e5ed 0%,#edf1e5cf 55%,#edf1e55c 100%)}
  .location{padding:9px 10px}.tour-hud{left:4%;right:4%;gap:6px}#reading-toggle,#motion-toggle{font-size:9px;padding:9px 10px}.view-controls{gap:5px}.btn{font-size:10px}.work-examples{gap:17px}
 }
-@media(prefers-reduced-motion:reduce){.depth-enabled section>.container{transform:none!important}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{#solar-scene,#living-farm,.atmosphere,.navigation,.tour-hud,.wayfinder,.tour-progress,#actor-layer,.farm-speech{display:none!important}body{background:white;color:black}.depth-enabled section,section{height:auto!important;min-height:0;padding:20px 0}.depth-enabled section>.container,.container{position:static!important;width:100%;max-width:none;visibility:visible!important;opacity:1!important;transform:none!important}main,footer{pointer-events:auto}h1,h2{font-size:28px!important}a{color:inherit}}
