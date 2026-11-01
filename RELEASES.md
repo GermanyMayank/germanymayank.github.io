@@ -39,3 +39,12 @@ node --test test.mjs
 ```
 
 If the site is unusable, recovery takes priority over feature work. Never promise zero failures: aim to catch failures early, limit their impact and make recovery predictable. This document is a procedure, not an automatic recovery service or uptime guarantee.
+
+
+## CV alignment — 1 November 2026
+
+Recovery baseline: `5db26c9b614d603de44ecd20b558238ce0be402a`, preserved as `checkpoint/before-cv-alignment-2026-11-01`. Do not move this checkpoint.
+
+Source: Mayank_Vekariya_CV_Solar.docx uploaded 1 November 2026. Align the two experience entries, metrics, skills, education, languages, contact details and crew dialogue. Replace the old PDF route with a printable online résumé and remove the obsolete PDF. The user explicitly approved publication of the CV contact details.
+
+Validation before release: all five tests passed locally. Browser preview was unavailable in the local environment; desktop/phone visual inspection remains a verification limit. Confirm CI and Pages deployment for the exact merge commit before reporting the release live.
