@@ -18,8 +18,8 @@ test('Portfolio HTML is balanced and all internal chapter links resolve',()=>{
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(ids.length,new Set(ids).size);
   for(const [,id] of html.matchAll(/href="#([^"]+)"/g))assert(ids.includes(id),'Missing #'+id);
-  assert(html.includes('href="Resume.pdf"'));
-  assert(html.includes('mailto:germanymayank@gmail.com'));
+  assert(html.includes('href="resume.html"'));
+  assert(html.includes('mailto:mayankvekariya100@gmail.com'));
 });
 
 test('Every local script exists and parses',()=>{
@@ -48,7 +48,7 @@ test('Fallback camera projects finite coordinates across desktop and phone paths
 test('Crew stories link to real portfolio destinations and speech fits the viewport',()=>{
   const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('crew-story.js',import.meta.url),'utf8'),scope);
   const C=scope.window.CrewStory;assert.equal(C.profiles.length,9);
-  for(const p of C.profiles){assert(p.line.length<160);if(p.href.startsWith('#'))assert(html.includes('id="'+p.href.slice(1)+'"'));else assert.equal(p.href,'Resume.pdf');}
+  for(const p of C.profiles){assert(p.line.length<160);if(p.href.startsWith('#'))assert(html.includes('id="'+p.href.slice(1)+'"'));else assert.equal(p.href,'resume.html');}
   for(const [w,h] of [[390,844],[1440,900]])for(const x of [-100,20,w/2,w+90])for(const y of [120,400,h-20]){
     const p=C.place(x,y,304,210,w,h);assert(p.left-152>=15);assert(p.left+152<=w-15);assert(p.top>=90);assert(p.top+210<=h-85);assert(p.tail>=22&&p.tail<=282);
   }
