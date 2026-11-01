@@ -160,7 +160,6 @@ window.createLivingFarm = function(T) {
     const tex=canvasTexture(512,224,c=>{c.fillStyle='#244d3c';c.fillRect(0,0,512,224);c.fillStyle='#f0cf83';c.fillRect(24,27,46,5);c.font='bold 32px sans-serif';c.fillStyle='#f8f6df';c.fillText(title,24,95);c.font='19px sans-serif';c.fillStyle='#c2d1b2';c.fillText(subtitle,24,151);});
     const panel=new T.Mesh(new T.PlaneGeometry(2.6,1.14),new T.MeshBasicMaterial({map:tex,side:T.DoubleSide}));panel.position.y=2.15;g.add(panel);return g;
   }
-  sign(-3.9,13,'MAYANK VEKARIYA','SYSTEMS / ENERGY / EXECUTION');sign(3.9,48,'01 / DELIVERY','GOOD WORK STARTS WITH A PLAN');sign(-3.9,105,'02 / OPERATIONS','EVERY PART HAS A PURPOSE');sign(3.9,185,'03 / IDEAS INTO ACTION','EXPLORE THE PROJECTS');sign(3.9,248,'LET’S CONNECT','THE NEXT CHAPTER STARTS HERE');
   function cabin(x,d,name){const g=group(scene,x,0,-d);box(g,'#e2e2cc',0,1.6,0,5.5,3.2,4);box(g,'#567963',0,3.26,0,5.8,.2,4.3);box(g,'#65858a',-1,1.85,2.02,1.8,1.1,.04);box(g,'#789377',1.5,1.1,2.03,.9,2.2,.05);shadow(g,0,0,7,6);sign(x,d-3,name,'TECHNICAL SITE / AUTHORISED ACCESS');return g;}
   cabin(-10,150,'CONTROL CABIN');cabin(9,221,'SITE OFFICE');
   for(let d=111;d<131;d+=5){box(scene,'#c3cbbb',-5,1,-d,1.2,2,.7);box(scene,'#4d7574',-5,1.4,-d+.36,.8,.3,.02);}
