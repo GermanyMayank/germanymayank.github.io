@@ -8,6 +8,23 @@ import {fileURLToPath} from 'node:url';
 const html=fs.readFileSync(new URL('index.html',import.meta.url),'utf8');
 const scripts=[...html.matchAll(/<script src="([^"?]+)/g)].map(m=>m[1]);
 
+test('Depth passages stay still and fully readable through the reading interval',()=>{
+  const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('depth-journey.js',import.meta.url),'utf8'),scope);
+  const J=scope.window.DepthJourney;
+  for(let phase=.2;phase<=.75;phase+=.01){const p=J.pose(phase);assert.equal(p.scale,1);assert.equal(p.opacity,1);assert.equal(p.x,0);}
+  assert(J.pose(0).scale<1);assert(J.pose(.95).scale>1);assert(J.pose(.95).opacity<.3);
+  for(let phase=-2;phase<3;phase+=.01){const p=J.pose(phase);assert(p.opacity>=0&&p.opacity<=1);assert(Number.isFinite(p.scale));}
+});
+
+test('Depth navigation handles boundaries, long documents and the final passage',()=>{
+  const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('depth-journey.js',import.meta.url),'utf8'),scope);
+  const locate=scope.window.DepthJourney.locate,stops=[0,1000,2000];
+  assert.equal(locate(-100,stops,1000).index,0);assert.equal(locate(-100,stops,1000).phase,0);
+  assert.equal(locate(1000,stops,1000).index,1);assert.equal(locate(1000,stops,1000).phase,0);
+  assert.equal(locate(2500,stops,1000).index,2);assert.equal(locate(2500,stops,1000).phase,.5);
+  assert.equal(locate(9000,stops,1000).phase,1);
+});
+
 test('Portfolio HTML is balanced and all internal chapter links resolve',()=>{
   const stack=[],voids=new Set(['meta','link','img','br','hr','input','source','area','base','embed','wbr']);
   for(const [,closing,raw] of html.matchAll(/<(\/?)([a-z][\w-]*)\b[^>]*>/gi)){

@@ -24,7 +24,7 @@ window.DepthJourney=(()=>{
    span=Math.max(800,innerHeight*1.65);document.body.style.setProperty('--journey-span',span+'px');
    enabled=!paused&&!manualPlain&&innerHeight>=520;document.body.classList.toggle('depth-enabled',enabled);
    if(enabled){const heights=panels.map(p=>p.getBoundingClientRect().height);if(heights.some(h=>h>innerHeight-170)){enabled=false;document.body.classList.remove('depth-enabled');}else panels.forEach((p,i)=>p.style.setProperty('--scene-top',Math.max(92,(innerHeight-heights[i])*.46)+'px'));}
-   measure();expose(current);toggle.setAttribute('aria-pressed',String(!enabled));toggle.textContent=enabled?'Reading view':paused?'Reading view':'Return to journey';toggle.disabled=paused;
+   measure();expose(current);const forcedPlain=paused||(!manualPlain&&!enabled);toggle.setAttribute('aria-pressed',String(!enabled));toggle.textContent=enabled||forcedPlain?'Reading view':'Return to journey';toggle.disabled=forcedPlain;
    if(!initial&&preserve&&(was||enabled))scrollTo({top:Math.max(0,stops[old]+(enabled?span*(was?oldPhase:.22):-105)),behavior:'instant'});
    initial=false;resizing=false;read();
   }
