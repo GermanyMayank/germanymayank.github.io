@@ -1,0 +1,4 @@
+.auto-greeting{position:fixed;z-index:9;width:188px;padding:11px 14px;background:#fffcf0ed;color:#274c3b;border:1px solid #d7dfcc;border-radius:14px 14px 14px 3px;box-shadow:0 5px 22px #203c2720;transform:translateX(-50%);font-size:12px;line-height:1.5;pointer-events:none;backdrop-filter:blur(5px)}
+.auto-greeting strong{display:block;font-size:10px;font-weight:600;color:#697c61;margin-bottom:2px}.auto-greeting span{display:block}.auto-greeting:after{content:'';position:absolute;bottom:-6px;left:var(--hello-tail,50%);width:10px;height:10px;transform:rotate(45deg);background:#fffcf0;border-right:1px solid #d7dfcc;border-bottom:1px solid #d7dfcc}
+@media(max-width:760px){.auto-greeting{width:174px;padding:9px 12px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.auto-greeting{animation:none}}

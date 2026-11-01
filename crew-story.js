@@ -10,6 +10,13 @@ window.CrewStory = (() => {
     {name:'Ravi',role:'Forklift driver',line:'I move pallets. He coordinates projects. We both appreciate a clear plan.',label:'See his approach',href:'#focus'},
     {name:'Robin',role:'Delivery driver',line:'I brought the panels. The useful delivery is Mayank’s résumé.',label:'Open the résumé',href:'resume.html'},
     {name:'Kai',role:'Crane operator',line:'Big lifts need careful coordination. Take a look at his approach to technical sites.',label:'Explore his approach',href:'#focus'}
+,
+    {name:'Elena',role:'Surveyor',line:'Site readiness comes first. Mayank’s field experience starts with checking the installation conditions.',label:'Explore field experience',href:'#experience'},
+    {name:'Jules',role:'Installation technician',line:'Good coordination connects the drawings, materials and field crew. Have a look at the practical work.',label:'See selected work',href:'#projects'},
+    {name:'Priya',role:'Electrical technician',line:'Electrical protection, testing and commissioning are part of Mayank’s solar project background.',label:'Explore his toolkit',href:'#skills'},
+    {name:'Ben',role:'Site logistics',line:'Every delivery needs a plan. His experience includes supplier coordination and material logistics.',label:'See his approach',href:'#focus'},
+    {name:'Zoe',role:'Quality inspector',line:'Documentation matters at handover. His CV has the full responsibilities and project details.',label:'Read the résumé',href:'resume.html'},
+    {name:'Amir',role:'Maintenance technician',line:'The end of the walk is a good place to start a conversation with Mayank.',label:'Connect with Mayank',href:'#contact'}
   ];
   const stations={proof:['01','Commissioning log','Track record'],focus:['02','Site method','Approach'],experience:['03','Planning board','Experience'],projects:['04','Control room','Projects'],skills:['05','Equipment cabinet','Toolkit'],contact:['06','Site office','Connect']};
   function get(id){const index=Number(String(id).replace('actor-',''));return profiles[index]||profiles[0];}
