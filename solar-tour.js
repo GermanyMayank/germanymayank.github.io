@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+  const journey=window.DepthJourney?.create();
   const fallback=window.createSolarWalk(document.querySelector('#solar-scene'));
   if(!fallback)document.body.classList.add('no-canvas');
   const sections=[...document.querySelectorAll('section')];
@@ -9,12 +10,15 @@
   let paused=reduced.matches,target=0,position=0,frame=0,active=-1,world=null,elapsed=0,previous=0,lastPaint=0,slowFrames=0,qualityReduced=false,disposed=false;
   const status=document.querySelector('#farm-status');
   function read(){
+    const travel=journey?.read();
     const y=scrollY,stops=sections.map(s=>s.getBoundingClientRect().top+scrollY);
     let i=0;while(i<stops.length-1&&y>=stops[i+1])i++;
     const next=stops[i+1]??document.documentElement.scrollHeight-innerHeight*.65;
     const fraction=Math.max(0,Math.min(1,(y-stops[i])/Math.max(1,next-stops[i])));
     target=Math.max(0,Math.min(1,(i+fraction)/stops.length));
+    if(travel?.enabled)target=travel.progress;
     let visibleChapter=0;while(visibleChapter<stops.length-1&&scrollY+innerHeight*.22>=stops[visibleChapter+1])visibleChapter++;
+    if(travel?.enabled)visibleChapter=travel.active;
     if(visibleChapter!==active){active=visibleChapter;dots.forEach((d,j)=>d.setAttribute('aria-current',String(j===active)));label.textContent=sections[active].dataset.stop||sections[active].id;}
     bar.style.transform='scaleX('+target+')';request();
   }
@@ -33,8 +37,8 @@
     if(!paused&&(world||Math.abs(target-position)>.00002))request();else previous=0;
   }
   function request(){if(!frame&&!document.hidden&&!disposed)frame=requestAnimationFrame(render);}
-  function resize(){fallback?.resize(innerWidth,innerHeight,devicePixelRatio);world?.resize(innerWidth,innerHeight,devicePixelRatio);read();request();}
-  function update(){button.textContent=paused?'Resume motion':'Pause motion';button.setAttribute('aria-pressed',String(paused));document.body.classList.toggle('motion-paused',paused);}
+  function resize(){journey?.resize();fallback?.resize(innerWidth,innerHeight,devicePixelRatio);world?.resize(innerWidth,innerHeight,devicePixelRatio);read();request();}
+  function update(){journey?.setPaused(paused);button.textContent=paused?'Resume motion':'Pause motion';button.setAttribute('aria-pressed',String(paused));document.body.classList.toggle('motion-paused',paused);}
   button.addEventListener('click',()=>{paused=!paused;previous=0;update();request();});
   reduced.addEventListener('change',e=>{paused=e.matches;previous=0;update();request();});
   addEventListener('scroll',read,{passive:true});addEventListener('resize',resize);
@@ -42,6 +46,7 @@
   document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',read));
   if('ResizeObserver' in window)new ResizeObserver(read).observe(document.querySelector('main'));
   addEventListener('farm-interaction',request);
+  document.addEventListener('journey-mode',()=>{read();request();});
   addEventListener('farm-renderer-lost',()=>{world?.dispose();world=null;document.body.classList.remove('farm-ready');status.textContent='Walking tour · simple view';request();});
   update();resize();
   import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js').then(T=>{

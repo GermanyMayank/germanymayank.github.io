@@ -1,11 +1,11 @@
 /* Fictional animated hosts. Claims point to existing portfolio sections. */
 window.CrewStory = (() => {
   const profiles=[
-    {name:'Aarav',role:'Site host',line:'90 solar pumping systems. Mayank helped coordinate the journey from site assessment to handover. The planning board has the story.',label:'See his experience',href:'#experience'},
-    {name:'Mia',role:'Site engineer',line:'30+ customer requirements, business cases and innovation reviews. The planning board explains Mayank’s product work.',label:'Open the planning board',href:'#experience'},
+    {name:'Aarav',role:'Site host',line:'90 solar pumping systems. Mayank helped coordinate the journey from site assessment to handover. Take a look at his field experience.',label:'See his experience',href:'#experience'},
+    {name:'Mia',role:'Site engineer',line:'30+ customer requirements, business cases and innovation reviews. His product experience explains the details.',label:'Explore his product work',href:'#product'},
     {name:'Sam',role:'Technician',line:'Curious about his technical side? The engineering toolkit is a good place to start.',label:'Explore his skills',href:'#skills'},
     {name:'Noah',role:'Maintenance',line:'The interesting part is how the details connect. Have a look at his selected work.',label:'Explore the projects',href:'#projects'},
-    {name:'Lea',role:'Site supervisor',line:'You want the evidence. I like that. His projects are in the control room.',label:'See selected projects',href:'#projects'},
+    {name:'Lea',role:'Site supervisor',line:'You want the evidence. I like that. His selected work has the details.',label:'See selected projects',href:'#projects'},
     {name:'Alex',role:'Site guide',line:'I could keep talking. His résumé is a better use of your coffee break.',label:'Read the résumé',href:'resume.html'},
     {name:'Ravi',role:'Forklift driver',line:'I move pallets. He coordinates projects. We both appreciate a clear plan.',label:'See his approach',href:'#focus'},
     {name:'Robin',role:'Delivery driver',line:'I brought the panels. The useful delivery is Mayank’s résumé.',label:'Open the résumé',href:'resume.html'},
@@ -45,7 +45,7 @@ window.CrewStory = (() => {
       render(actor,x,y,w,h,show){
         if(dismissed||!show){el.hidden=true;return;}
         el.hidden=false;const rect=el.getBoundingClientRect();
-        const blockers=[...document.querySelectorAll('.site-board,.hero h1,.hero .lead,.hero .button-row,header,.tour-hud')].map(e=>e.getBoundingClientRect());
+        const blockers=[...document.querySelectorAll('.site-board,.hero h1,.hero .lead,.hero .button-row,header,.tour-hud')].filter(e=>getComputedStyle(e).visibility!=='hidden').map(e=>e.getBoundingClientRect());
         const p=place(x,y,rect.width,rect.height,w,h,blockers);
         el.style.left=p.left+'px';el.style.top=p.top+'px';el.style.setProperty('--tail-x',p.tail+'px');el.style.setProperty('--tail-y',p.tailY+'px');el.dataset.tail=p.side;
       },

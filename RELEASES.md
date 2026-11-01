@@ -48,3 +48,12 @@ Recovery baseline: `5db26c9b614d603de44ecd20b558238ce0be402a`, preserved as `che
 Source: Mayank_Vekariya_CV_Solar.docx uploaded 1 November 2026. Align the two experience entries, metrics, skills, education, languages, contact details and crew dialogue. Replace the old PDF route with a printable online résumé and remove the obsolete PDF. The user explicitly approved publication of the CV contact details.
 
 Validation before release: all five tests passed locally. Browser preview was unavailable in the local environment; desktop/phone visual inspection remains a verification limit. Confirm CI and Pages deployment for the exact merge commit before reporting the release live.
+
+
+## Forward journey — November 2026
+
+Recovery: `checkpoint/before-depth-journey-2026-11-01` preserves `0b0f747996ef35472ca107846945f5ef1b29463c`. Keep it unchanged. Restore through a reviewed revert commit; do not force-push history.
+
+Replace banner panels with transparent editorial text. Native scroll drives forward farm travel and a reading plane with arrival, a stationary readable interval and departure. Nine concise chapters retain the current CV facts; the full résumé remains available. Remove portfolio signboards; keep the existing working crew, vehicles and direct interactions. Reading view presents the full semantic document. Reduced motion starts with motion paused and reading view active; unsuitable viewport/text sizes use the ordinary document.
+
+Validation: seven local tests pass. The isolated preview was checked on desktop and phone for text fit, transparent surfaces, native scroll, jump links, keyboard navigation, crew activation/Escape and the reduced-motion default. Browser testing caught reading-view chapter drift and viewport chapter drift; both were corrected before homepage release. CI and exact-commit Pages deployment must pass. This is not exhaustive device or performance coverage.

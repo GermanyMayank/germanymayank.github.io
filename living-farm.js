@@ -160,22 +160,8 @@ window.createLivingFarm = function(T) {
     const tex=canvasTexture(512,224,c=>{c.fillStyle='#244d3c';c.fillRect(0,0,512,224);c.fillStyle='#f0cf83';c.fillRect(24,27,46,5);c.font='bold 32px sans-serif';c.fillStyle='#f8f6df';c.fillText(title,24,95);c.font='19px sans-serif';c.fillStyle='#c2d1b2';c.fillText(subtitle,24,151);});
     const panel=new T.Mesh(new T.PlaneGeometry(2.6,1.14),new T.MeshBasicMaterial({map:tex,side:T.DoubleSide}));panel.position.y=2.15;g.add(panel);return g;
   }
-  sign(-3.9,13,'MAYANK VEKARIYA','SYSTEMS / ENERGY / EXECUTION');sign(3.9,48,'01 / DELIVERY','GOOD WORK STARTS WITH A PLAN');sign(-3.9,105,'02 / OPERATIONS','EVERY PART HAS A PURPOSE');sign(3.9,185,'03 / IDEAS INTO ACTION','EXPLORE THE PROJECTS');sign(3.9,248,'LET’S CONNECT','THE NEXT CHAPTER STARTS HERE');
   function cabin(x,d,name){const g=group(scene,x,0,-d);box(g,'#e2e2cc',0,1.6,0,5.5,3.2,4);box(g,'#567963',0,3.26,0,5.8,.2,4.3);box(g,'#65858a',-1,1.85,2.02,1.8,1.1,.04);box(g,'#789377',1.5,1.1,2.03,.9,2.2,.05);shadow(g,0,0,7,6);sign(x,d-3,name,'TECHNICAL SITE / AUTHORISED ACCESS');return g;}
   cabin(-10,150,'CONTROL CABIN');cabin(9,221,'SITE OFFICE');
-  function storyBoard(id,x,d,title,note){
-    const g=group(scene,x,0,-d);g.userData.station={stationId:id};
-    for(const xx of [-1.2,1.2])box(g,'#62755d',xx,.85,0,.10,1.7,.10);
-    box(g,'#294e3b',0,2.0,-.03,3.25,1.9,.12);
-    const tex=canvasTexture(512,300,c=>{c.fillStyle='#f0ecd7';c.fillRect(0,0,512,300);c.fillStyle='#294e3b';c.fillRect(0,0,512,38);c.fillStyle='#cad5ba';c.font='15px sans-serif';c.fillText('MAYANK VEKARIYA / FIELD NOTES',22,25);c.fillStyle='#234a36';c.font='bold 35px sans-serif';c.fillText(title,22,105);c.fillStyle='#718266';c.font='19px sans-serif';c.fillText(note,22,155);c.fillStyle='#cf844f';c.fillRect(22,209,176,49);c.fillStyle='#fff8e5';c.font='bold 17px sans-serif';c.fillText('CLICK TO EXPLORE',33,240);});
-    const front=new T.Mesh(new T.PlaneGeometry(3.05,1.72),new T.MeshBasicMaterial({map:tex}));front.position.set(0,2.0,.04);g.add(front);shadow(g,0,0,4,2);
-  }
-  storyBoard('proof',-4.6,39,'COMMISSIONING LOG','Milestones / delivery / results');
-  storyBoard('focus',4.7,75,'THE SITE METHOD','People / quality / coordination');
-  storyBoard('experience',-4.7,110,'PLANNING BOARD','Explore the work behind the work');
-  storyBoard('projects',4.7,145,'CONTROL ROOM','Selected projects / real details');
-  storyBoard('skills',-4.7,180,'THE TOOLKIT','The tools behind the decisions');
-  storyBoard('contact',4.7,215,'THE NEXT CHAPTER','Your next engineer could be here');
   for(let d=111;d<131;d+=5){box(scene,'#c3cbbb',-5,1,-d,1.2,2,.7);box(scene,'#4d7574',-5,1.4,-d+.36,.8,.3,.02);}
   for(let i=0;i<8;i++){const g=group(scene,4.1+i*.9,0,-19);box(g,'#394e41',0,.05,0,.4,.1,.4);mesh(g,'cone','#e28c43',0,.35,0,.16,.6,.16);mesh(g,'cylinder','#f4e8b7',0,.38,0,.105,.1,.105);}
   for(let i=0;i<6;i++){const g=group(scene,8+(i%3)*1.7,0,-20-Math.floor(i/3)*3);box(g,'#a78b5e',0,.15,0,1.3,.2,1);for(let j=0;j<4;j++)box(g,'#315768',0,.3+j*.09,0,1.2,.07,.9);}
@@ -218,7 +204,7 @@ window.createLivingFarm = function(T) {
   function resize(w,h,dpr){width=w;height=h;renderer.setPixelRatio(Math.min(dpr||1,quality,w<760?1.25:1.5));renderer.setSize(w,h);camera.aspect=w/h;camera.fov=w<760?74:56;camera.updateProjectionMatrix();}
   function draw(progress,elapsed,paused){
     time=elapsed;camDistance=progress*245;
-    camera.position.set(Math.sin(progress*9)*.08,2.65,-camDistance);camera.lookAt(0,1.1,-camDistance-42);camera.updateMatrixWorld();
+    camera.position.set(Math.sin(progress*Math.PI*2)*.45,2.65,-camDistance);camera.lookAt(Math.sin(progress*Math.PI*2)*.18,1.1,-camDistance-42);camera.updateMatrixWorld();
     const warmActors=[];
     for(const a of actors){
       const ahead=-a.g.position.z-camDistance,near=ahead>-12&&ahead<100;
@@ -232,7 +218,7 @@ window.createLivingFarm = function(T) {
     birds.forEach(({g,wings,phase})=>{g.position.set(Math.sin(time*.06+phase)*25,8+Math.sin(time*.15+phase),-camDistance-85);wings[0].rotation.z=Math.sin(time*3+phase)*.35;wings[1].rotation.z=-Math.sin(time*3+phase)*.35;});
     scene.updateMatrixWorld();
     // Focus-only HTML buttons provide keyboard access, with no visible scene markers.
-    const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,.hero-copy h1,.hero-copy .lead,.hero-copy .tag,header,footer,.site-activity,.tour-hud')].map(el=>el.getBoundingClientRect());
+    const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,.hero-copy h1,.hero-copy .lead,.hero-copy .tag,header,footer,.site-activity,.tour-hud')].filter(el=>getComputedStyle(el).visibility!=='hidden').map(el=>el.getBoundingClientRect());
     warmActors.sort((a,b)=>Math.abs(a.g.position.z+camDistance)-Math.abs(b.g.position.z+camDistance));
     for(const a of warmActors){
       headAnchor.set(0,a.human?2.05:3.1,0);a.g.localToWorld(headAnchor);anchor.copy(headAnchor).project(camera);
