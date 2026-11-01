@@ -1,4 +1,4 @@
-/* Original low-poly models and animation. Three.js is supplied by the loader. */
+/* Original articulated crew and instanced solar modules. Three.js is supplied by the loader. */
 window.createLivingFarm = function(T) {
   'use strict';
   const B=window.FarmBehaviour;
@@ -30,17 +30,32 @@ window.createLivingFarm = function(T) {
   box(scene,'#a5b783',0,-.15,-180,240,.25,700);
   box(scene,'#d4c6a6',0,-.005,-180,5.4,.04,700);
   for(const x of [-2.7,2.7])box(scene,'#e4ddc2',x,.015,-180,.16,.06,700);
-  const gravel=[],grass=[],panel=[],posts=[];
-  const texture=canvasTexture(256,128,c=>{c.fillStyle='#244d64';c.fillRect(0,0,256,128);for(let x=0;x<8;x++)for(let y=0;y<3;y++){c.fillStyle=(x+y)%2?'#21495f':'#29536b';c.fillRect(x*32+1,y*42.6+1,30,40.6);c.strokeStyle='#83adbd';c.lineWidth=.65;c.strokeRect(x*32+1,y*42.6+1,30,40.6);}});
+  const gravel=[],grass=[],panel=[],posts=[],frames=[],rails=[];
+  // Five framed modules per table, with split-cell detail and thin busbars.
+  const texture=canvasTexture(1024,512,c=>{
+    c.fillStyle='#101e2a';c.fillRect(0,0,1024,512);
+    for(let m=0;m<5;m++)for(let row=0;row<24;row++)for(let col=0;col<6;col++){
+      const x=m*204.8+5+col*32.3,y=6+row*20.75+(row>=12?3:0),w=30.5,h=18.8;
+      c.fillStyle=['#142f43','#17364b','#1a3a50'][(m+col+row)%3];
+      c.beginPath();c.moveTo(x+2,y);c.lineTo(x+w-2,y);c.lineTo(x+w,y+2);c.lineTo(x+w,y+h-2);c.lineTo(x+w-2,y+h);c.lineTo(x+2,y+h);c.lineTo(x,y+h-2);c.lineTo(x,y+2);c.closePath();c.fill();
+      c.strokeStyle='#8babb77a';c.lineWidth=.45;for(let b=1;b<4;b++){c.beginPath();c.moveTo(x+w*b/4,y+1);c.lineTo(x+w*b/4,y+h-1);c.stroke();}
+    }
+    const shine=c.createLinearGradient(0,0,1024,512);shine.addColorStop(0,'#cce7f01a');shine.addColorStop(.45,'#effaff08');shine.addColorStop(1,'#04142120');c.fillStyle=shine;c.fillRect(0,0,1024,512);
+  });
   texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
-  const panelMat=new T.MeshStandardMaterial({map:texture,color:'#ffffff',roughness:.4,metalness:.24});
+  const panelMat=new T.MeshStandardMaterial({map:texture,color:'#ffffff',roughness:.24,metalness:.12});
+  const frameMat=new T.MeshStandardMaterial({color:'#acb5b5',roughness:.34,metalness:.78});
+  const tilt=.27;
   for(let r=0;r<54;r++)for(const side of [-1,1])for(let col=0;col<4;col++){
     const d=8+r*7,x=side*(7.25+col*6.65);
     if((side===1&&d>17&&d<49)||(side===-1&&d>137&&d<162)||(side===1&&d>205&&d<234))continue;
-    panel.push([x,1.7,-d,5.85,.09,3.45,.27]);
+    panel.push([x,1.7,-d,5.85,.065,2.35,tilt]);
+    for(const z of [-1.19,1.19])frames.push([x,1.73-z*Math.sin(tilt),-d+z*Math.cos(tilt),5.91,.065,.045,tilt]);
+    for(let j=0;j<=5;j++){const lx=-2.95+j*1.18;frames.push([x+lx,1.745,-d,.045,.065,2.4,tilt]);}
+    for(const z of [-.78,.78])rails.push([x,1.57-z*Math.sin(tilt),-d+z*Math.cos(tilt),5.95,.10,.09,tilt]);
     for(const px of [x-2,x+2])posts.push([px,.74,-d,.09,1.48,.1]);
   }
-  const panelBatch=batch('box',panelMat,panel);batch('box','#89948b',posts);
+  const panelBatch=batch('box',panelMat,panel);batch('box',frameMat,frames);batch('box','#78858a',rails);batch('box','#89948b',posts);
   for(let i=0;i<370;i++){const seed=Math.sin(i*71.37)*1342.83,fract=seed-Math.floor(seed);gravel.push([(fract-.5)*4.8,.025,-i*.92,.045,.018,.035,0,i]);}
   batch('box','#afa17e',gravel);
   for(let i=0;i<120;i++){const side=i%2?1:-1;grass.push([side*(31+(i%7)*1.3),.23,-i*3.1,.8,.45,.7]);}
@@ -49,7 +64,8 @@ window.createLivingFarm = function(T) {
   const actorLayer=document.querySelector('#actor-layer');
   const speech=document.querySelector('#farm-speech');
   const dialogue=window.CrewStory?.build();
-  let width=1,height=1,camDistance=0,time=0,lastSpeech=null,quality=1.5;
+  let width=1,height=1,camDistance=0,time=0,lastSpeech=null,quality=1.5,hello=null;
+  const presence=window.CrewPresence.create(),greetingEl=document.querySelector('#crew-greeting');
   function say(actor,text,duration=11){
     lastSpeech={actor,text,until:time+duration};
     if(dialogue)dialogue.open(actor,text);else{speech.textContent=text;speech.hidden=false;document.querySelector('#farm-live').textContent=actor.name+': '+text;}
@@ -62,41 +78,54 @@ window.createLivingFarm = function(T) {
     g.traverse(o=>{if(o.isMesh)o.userData.actor=a;});actors.push(a);return a;
   }
   function interact(a){
+    hello=null;greetingEl.hidden=true;a.waveUntil=0;
     const level=B.react(a.reaction,time);
     const line=a.reaction.count===5?'Fine. You are on the team. Safety briefing starts now.':a.phrases[level-1];
     say(a,line);if(a.human)a.g.rotation.y=Math.atan2(camera.position.x-a.g.position.x,camera.position.z-a.g.position.z);
     window.dispatchEvent(new Event('farm-interaction'));
   }
-  function human(parent,x,z,vest='#e88837',skin='#c79874'){
+  function human(parent,x,z,vest='#e88837',skin){
+    const seed=actors.length,skinTone=skin||['#c18b65','#e0b18a','#8e5d43','#b87b57','#d5a07d','#76503a'][seed%6];
+    const helmet=seed%4===1?'#edf0df':seed%4===2?'#e8a64a':'#e4c557',trousers=seed%3===0?'#35474d':'#304553';
     const g=group(parent,x,0,z),body=group(g,0,0,0);
-    box(body,vest,0,1.08,0,.47,.58,.3);box(body,'#e5e9bc',0,1.03,.158,.46,.055,.015);
-    for(const xx of [-.14,.14])box(body,'#e5e9bc',xx,1.15,.16,.055,.43,.015);
-    const head=group(body,0,1.57,0);ball(head,skin,0,0,0,.205);
-    mesh(head,'sphere','#f4d25f',0,.145,0,.23,.13,.23);mesh(head,'cylinder','#f4d25f',0,.11,.025,.265,.035,.265);
-    for(const xx of [-.075,.075])ball(head,'#243e36',xx,.015,.181,.022);
-    const brows=[box(head,'#4d3d2b',-.073,.074,.18,.065,.018,.025),box(head,'#4d3d2b',.073,.074,.18,.065,.018,.025)];
-    const arms=[group(body,-.3,1.29,0),group(body,.3,1.29,0)];
-    arms.forEach(a=>{box(a,vest,0,-.19,0,.17,.38,.19);ball(a,skin,0,-.43,0,.09);});
-    const legs=[group(body,-.14,.78,0),group(body,.14,.78,0)];
-    legs.forEach(l=>{box(l,'#324d54',0,-.30,0,.20,.61,.22);box(l,'#26352f',0,-.63,.055,.23,.16,.36);});
-    shadow(g,0,0,1.3,1.1);
+    mesh(body,'sphere',vest,0,1.13,0,.255,.335,.155);
+    mesh(body,'sphere',trousers,0,.84,0,.235,.12,.145);
+    box(body,'#d8dfb4',0,1.04,.15,.45,.035,.012);
+    for(const xx of [-.12,.12])box(body,'#d8dfb4',xx,1.21,.146,.033,.38,.012);
+    box(body,'#697461',0,1.22,.16,.018,.45,.016);
+    for(const xx of [-.16,.16])box(body,'#b17735',xx,1.0,.157,.10,.09,.025);
+    mesh(body,'cylinder',skinTone,0,1.48,0,.068,.12,.068);
+    const head=group(body,0,1.65,0);mesh(head,'sphere',skinTone,0,0,0,.145,.18,.14);
+    for(const xx of [-.145,.145])ball(head,skinTone,xx,0,0,.035);
+    mesh(head,'sphere',skinTone,0,-.005,.138,.025,.036,.035);
+    mesh(head,'sphere',helmet,0,.13,-.008,.17,.115,.17);mesh(head,'cylinder',helmet,0,.10,.025,.195,.025,.195);
+    box(head,'#eee5c5',0,.17,.153,.028,.09,.016);
+    for(const xx of [-.052,.052])ball(head,'#283b37',xx,.025,.126,.010);
+    box(head,'#8c6651',0,-.084,.123,.055,.009,.008);
+    const brows=[box(head,'#574232',-.052,.061,.13,.041,.009,.012),box(head,'#574232',.052,.061,.13,.041,.009,.012)];
+    if(seed%4===1){ball(head,'#4b3730',0,-.08,-.13,.085);ball(head,'#4b3730',0,-.17,-.13,.06);}
+    const arms=[group(body,-.285,1.36,0),group(body,.285,1.36,0)],elbows=[];
+    arms.forEach(a=>{ball(a,vest,0,-.015,0,.095);mesh(a,'cylinder',vest,0,-.17,0,.075,.30,.075);const elbow=group(a,0,-.32,0);ball(elbow,vest,0,0,0,.074);mesh(elbow,'cylinder','#465b63',0,-.14,0,.059,.28,.059);mesh(elbow,'sphere','#d6cfb5',0,-.31,.015,.065,.09,.062);elbows.push(elbow);});
+    const legs=[group(body,-.12,.82,0),group(body,.12,.82,0)],knees=[];
+    legs.forEach(l=>{mesh(l,'cylinder',trousers,0,-.19,0,.098,.39,.105);const knee=group(l,0,-.39,0);ball(knee,trousers,0,0,0,.10);mesh(knee,'cylinder',trousers,0,-.17,0,.082,.34,.09);box(knee,'#3c4f50',0,-.12,.08,.13,.16,.03);mesh(knee,'sphere','#2b3632',0,-.36,.065,.11,.09,.19);box(knee,'#202c29',0,-.415,.05,.22,.055,.33);knees.push(knee);});
+    shadow(g,0,0,1.1,.8);
     function pose(t,{walk=false,wave=false,angry=false,tablet=false,stomp=false}={}){
-      const swing=walk?Math.sin(t*6.2)*.52:0;
-      legs[0].rotation.x=swing;legs[1].rotation.x=-swing;
-      arms[0].rotation.set(-swing*.7,0,0);arms[1].rotation.set(swing*.7,0,0);
-      if(wave){arms[1].rotation.x=-.25;arms[1].rotation.z=2.4+Math.sin(t*8)*.3;}
-      if(tablet){arms[0].rotation.x=-.9;arms[1].rotation.x=-.9;}
-      if(angry){arms[0].rotation.z=-.55;arms[1].rotation.z=.55;head.rotation.y=Math.sin(t*13)*.15;}
-      else head.rotation.y=Math.sin(t*.6)*.06;
-      brows[0].rotation.z=angry?-.35:0;brows[1].rotation.z=angry?.35:0;
-      body.position.y=walk?Math.abs(Math.sin(t*6.2))*.035:Math.sin(t*1.8)*.008;
-      body.rotation.z=stomp?Math.sin(t*15)*.045:0;
-      if(stomp){legs[0].rotation.x=Math.max(0,Math.sin(t*10))*.25;body.position.y+=Math.abs(Math.sin(t*10))*.045;}
+      const swing=walk?Math.sin(t*5.1)*.36:0;legs[0].rotation.x=swing;legs[1].rotation.x=-swing;
+      knees[0].rotation.x=walk?Math.max(0,-Math.sin(t*5.1))*.45:0;knees[1].rotation.x=walk?Math.max(0,Math.sin(t*5.1))*.45:0;
+      arms[0].rotation.set(-swing*.65,0,.05);arms[1].rotation.set(swing*.65,0,-.05);elbows.forEach(e=>e.rotation.x=-.14);
+      if(wave){arms[1].rotation.x=-.35;arms[1].rotation.z=2.2+Math.sin(t*6)*.18;elbows[1].rotation.x=-.6;}
+      if(tablet){arms[0].rotation.x=-.65;arms[1].rotation.x=-.65;elbows[0].rotation.x=-.65;elbows[1].rotation.x=-.65;}
+      if(angry){arms[0].rotation.z=-.4;arms[1].rotation.z=.4;elbows.forEach(e=>e.rotation.x=-.5);head.rotation.y=Math.sin(t*8)*.1;}
+      else head.rotation.y=Math.sin(t*.55)*.07;
+      brows[0].rotation.z=angry?-.25:0;brows[1].rotation.z=angry?.25:0;
+      body.position.y=walk?Math.abs(Math.sin(t*5.1))*.018:Math.sin(t*1.4)*.005;
+      body.rotation.z=stomp?Math.sin(t*10)*.025:0;
+      if(stomp)legs[0].rotation.x=Math.max(0,Math.sin(t*8))*.18;
     }
-    return {g,body,head,arms,legs,pose};
+    return {g,body,head,arms,legs,elbows,knees,pose};
   }
   function worker(name,x,d,mode,phrases,greeting){
-    const h=human(scene,x,-d,mode==='supervisor'?'#d5bd52':'#e88837');
+    const h=human(scene,x,-d,mode==='supervisor'||actors.length%3===1?'#c9ce58':'#df8b3e');
     const a=register(name,h.g,d,phrases,greeting);a.human=h;
     if(mode==='tablet'||mode==='supervisor')box(h.body,'#344f56',0,1.10,.4,.32,.24,.045);
     if(mode==='clean'){box(h.arms[1],'#93a19a',0,-.75,0,.035,1.1,.035);box(h.arms[1],'#c3d8d3',0,-1.3,0,.38,.07,.18);}
@@ -104,17 +133,21 @@ window.createLivingFarm = function(T) {
       const tools=group(h.arms[0],0,-.59,0);box(tools,'#42665d',0,0,0,.40,.25,.23);box(tools,'#263e37',0,.16,0,.17,.07,.045);
       box(h.arms[1],'#385363',0,-.38,.13,.19,.28,.035);
     }
+    if(mode==='inspect'||mode==='cable'){mesh(h.arms[1],'cylinder','#89979a',0,-.50,.08,.025,.3,.025);box(h.arms[0],'#405854',0,-.62,0,.28,.23,.18);}
+    if(mode==='survey'){const tripod=group(h.g,.65,0,.1);for(let i=0;i<3;i++){const leg=group(tripod,0,.72,0);leg.rotation.y=i*Math.PI*2/3;const shaft=mesh(leg,'cylinder','#b8a35e',0,-.36,.15,.025,.83,.025);shaft.rotation.x=.4;}box(tripod,'#c2cfc0',0,1.18,0,.26,.22,.26);mesh(tripod,'cylinder','#3f6067',0,1.19,.16,.075,.16,.075).rotation.x=Math.PI/2;}
     const baseX=x;
     a.update=(t,reacting)=>{
-      const angry=reacting&&a.reaction.level>=2;
-      h.pose(reacting?time:t,{walk:mode==='walk'&&!reacting,wave:reacting&&!angry,angry,stomp:reacting&&a.reaction.level===3,tablet:!reacting&&(mode==='tablet'||mode==='supervisor')});
-      if(!reacting){
+      const angry=reacting&&a.reaction.level>=2,waving=!reacting&&a.waveUntil>time;
+      h.pose(reacting||waving?time:t,{walk:mode==='walk'&&!reacting&&!waving,wave:(reacting&&!angry)||waving,angry,stomp:reacting&&a.reaction.level===3,tablet:!reacting&&(mode==='tablet'||mode==='supervisor')});
+      if(waving)h.g.rotation.y=Math.atan2(camera.position.x-h.g.position.x,camera.position.z-h.g.position.z);
+      if(!reacting&&!waving){
         if(mode==='walk'){h.g.position.z=-d+Math.sin(t*.28)*2.8;h.g.rotation.y=Math.cos(t*.28)>0?0:Math.PI;}
         else h.g.rotation.y=x>0?Math.PI/2:-Math.PI/2;
+        if(mode==='inspect'||mode==='cable'||mode==='survey'){h.arms[1].rotation.x=-.65+Math.sin(t*1.7)*.14;h.elbows[1].rotation.x=-.6;h.head.rotation.x=.12;}
         if(mode==='tablet'||mode==='supervisor'){h.arms[1].rotation.x=-.95+Math.sin(t*2.6)*.13;}
         if(mode==='welcome'){h.arms[1].rotation.x=-.72+Math.sin(t*1.7)*.12;h.body.rotation.x=Math.sin(t*.65)*.035;}
       }else h.body.rotation.x=0;
-      if(mode==='clean'&&!reacting)h.arms[1].rotation.x=-1.0+Math.sin(t*1.8)*.35;
+      if(mode==='clean'&&!reacting&&!waving)h.arms[1].rotation.x=-1.0+Math.sin(t*1.8)*.35;
       h.g.position.x=mode==='welcome'&&d===8&&width<760?3.05:baseX;
       if(mode==='welcome'&&d===8)h.g.position.z=width<760?-12:-8;
     };return a;
@@ -154,6 +187,13 @@ window.createLivingFarm = function(T) {
   const craneDriver=human(turret,-.65,.3);craneDriver.g.scale.setScalar(.5);craneDriver.g.position.y=.35;
   const operator=register('Crane operator',crane,25,["Steady hands. Big ambitions.","You are interrupting my precision!","I am putting your clicks on the lift plan."],"A little heavy lifting behind the scenes.");
   operator.update=(t,r)=>{turret.rotation.y=Math.sin(t*.17)*.3;const lift=1.8+Math.sin(t*.55)*.9;load.position.y=lift;cable.position.y=(6.95+lift+.65)/2;cable.scale.y=6.95-lift-.65;craneDriver.pose(r?time:t,{wave:r,angry:r&&operator.reaction.level>1});};
+  // More people doing distinct jobs, spread along the route rather than clustered at the entrance.
+  worker('Elena · surveyor',-3.6,26,'survey',["Checking the next installation point.","Just lining up the measurements.","The tripod is doing its best."],"Hi! Just checking the next row.");
+  worker('Jules · installation technician',3.65,70,'inspect',["A final check on the mounting hardware.","One moment, precision takes patience.","You can hold the spanner next time."],"Hi! Welcome to the installation crew.");
+  worker('Priya · electrical technician',-3.5,116,'cable',["Keeping the cable routes tidy.","Just tracing this connection.","Your clicks need a cable label."],"Hi! Taking a look at the connections.");
+  worker('Ben · site logistics',3.55,132,'walk',["Checking the next delivery point.","There is a plan for every pallet.","You are coming on the next site walk."],"Hi! Good to see you on site.");
+  worker('Zoe · quality inspector',3.6,178,'tablet',["A few checks before handover.","Let me finish this inspection note.","Your enthusiasm is now documented."],"Hi! Just finishing a quality check.");
+  worker('Amir · maintenance technician',-3.5,226,'clean',["Keeping the panels ready for work.","This row still needs attention.","I saved a cleaning brush for you."],"Hi! Enjoy the rest of the walk.");
   // Site details and destinations.
   function sign(x,d,title,subtitle){
     const g=group(scene,x,0,-d);box(g,'#718368',0,1.15,0,.09,2.3,.09);
@@ -210,7 +250,7 @@ window.createLivingFarm = function(T) {
       const ahead=-a.g.position.z-camDistance,near=ahead>-12&&ahead<100;
       a.g.visible=near;if(!near){a.button.hidden=true;a.lastTime=time;continue;}
       const delta=Math.min(.1,Math.max(0,time-a.lastTime));a.lastTime=time;
-      const reacting=B.active(a.reaction,time);if(!reacting)a.clock+=delta;
+      const reacting=B.active(a.reaction,time);if(!reacting&&!(a.waveUntil>time))a.clock+=delta;
       a.update(a.clock,reacting);
       warmActors.push(a);
     }
@@ -220,6 +260,7 @@ window.createLivingFarm = function(T) {
     // Focus-only HTML buttons provide keyboard access, with no visible scene markers.
     const blockers=[...document.querySelectorAll('main .container:not(.hero-copy),.hero-copy a,.hero-copy h1,.hero-copy .lead,.hero-copy .tag,header,footer,.site-activity,.tour-hud')].filter(el=>getComputedStyle(el).visibility!=='hidden').map(el=>el.getBoundingClientRect());
     warmActors.sort((a,b)=>Math.abs(a.g.position.z+camDistance)-Math.abs(b.g.position.z+camDistance));
+    const greetingCandidates=[];
     for(const a of warmActors){
       headAnchor.set(0,a.human?2.05:3.1,0);a.g.localToWorld(headAnchor);anchor.copy(headAnchor).project(camera);
       const x=(anchor.x*.5+.5)*width;let y=(-anchor.y*.5+.5)*height;
@@ -228,7 +269,12 @@ window.createLivingFarm = function(T) {
       if(visible&&(y<90||blockers.some(r=>x>r.left-16&&x<r.right+16&&y>r.top-16&&y<r.bottom+16)))visible=false;
       a.button.hidden=!visible;
       if(visible){a.button.style.transform=`translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;a.screen={x,y};}
+      if(a.human&&visible){const place=window.CrewStory.place(x,y,188,76,width,height,blockers);greetingCandidates.push({id:a.id,human:true,visible:place.score<180,ahead:-a.g.position.z-camDistance});}
     }
+    const occupied=!!(lastSpeech&&lastSpeech.until>=time&&!dialogue?.dismissed());
+    const chosen=presence.choose(greetingCandidates,time,{paused,occupied});
+    if(chosen){const actor=actors.find(a=>a.id===chosen);hello={actor,until:time+4};actor.waveUntil=time+2.7;const profile=window.CrewStory.get(actor.id);greetingEl.querySelector('strong').textContent=profile.name;greetingEl.querySelector('span').textContent=actor.greeting.startsWith('Hi')?actor.greeting:'Hi! Good to see you on site.';}
+    if(hello){const a=hello.actor,ahead=-a.g.position.z-camDistance,show=!paused&&!occupied&&time<hello.until&&!a.button.hidden&&ahead>1&&ahead<24;if(show){const rect=greetingEl.getBoundingClientRect();const p=window.CrewStory.place(a.screen.x,a.screen.y,rect.width||188,rect.height||76,width,height,blockers);greetingEl.hidden=p.score>180;greetingEl.style.left=p.left+'px';greetingEl.style.top=p.top+'px';greetingEl.style.setProperty('--hello-tail',p.tail+'px');}else greetingEl.hidden=true;}else greetingEl.hidden=true;
     if(lastSpeech){
       if(dialogue?.holding())lastSpeech.until=time+2;
       const a=lastSpeech.actor,ahead=-a.g.position.z-camDistance;
@@ -241,5 +287,5 @@ window.createLivingFarm = function(T) {
     renderer.render(scene,camera);
   }
   document.body.prepend(renderer.domElement);
-  return {resize,draw,actors,setQuality(r){quality=r;resize(width,height,devicePixelRatio);},dispose(){document.removeEventListener('pointerdown',down);document.removeEventListener('pointerup',up);document.removeEventListener('pointermove',hover);document.removeEventListener('pointercancel',cancel);document.body.classList.remove('over-crew');actors.forEach(a=>a.button.remove());renderer.dispose();renderer.domElement.remove();speech.hidden=true;}};
+  return {resize,draw,actors,setQuality(r){quality=r;resize(width,height,devicePixelRatio);},dispose(){document.removeEventListener('pointerdown',down);document.removeEventListener('pointerup',up);document.removeEventListener('pointermove',hover);document.removeEventListener('pointercancel',cancel);document.body.classList.remove('over-crew');actors.forEach(a=>a.button.remove());renderer.dispose();renderer.domElement.remove();speech.hidden=true;greetingEl.hidden=true;}};
 };

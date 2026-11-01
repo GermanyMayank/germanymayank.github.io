@@ -64,10 +64,32 @@ test('Fallback camera projects finite coordinates across desktop and phone paths
 
 test('Crew stories link to real portfolio destinations and speech fits the viewport',()=>{
   const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('crew-story.js',import.meta.url),'utf8'),scope);
-  const C=scope.window.CrewStory;assert.equal(C.profiles.length,9);
+  const C=scope.window.CrewStory;assert.equal(C.profiles.length,15);
   for(const p of C.profiles){assert(p.line.length<160);if(p.href.startsWith('#'))assert(html.includes('id="'+p.href.slice(1)+'"'));else assert.equal(p.href,'resume.html');}
   for(const [w,h] of [[390,844],[1440,900]])for(const x of [-100,20,w/2,w+90])for(const y of [120,400,h-20]){
     const p=C.place(x,y,304,210,w,h);assert(p.left-152>=15);assert(p.left+152<=w-15);assert(p.top>=90);assert(p.top+210<=h-85);assert(p.tail>=22&&p.tail<=282);
   }
   const p=C.place(700,420,304,210,1440,900,[{left:500,right:900,top:140,bottom:410}]);assert(p.top>=420,'Speech should avoid a heading above its speaker');
+});
+
+
+test('Approach greetings are once per worker and spaced between encounters',()=>{
+ const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('crew-presence.js',import.meta.url),'utf8'),scope);
+ const presence=scope.window.CrewPresence.create(),a={id:'one',human:true,visible:true,ahead:10},b={id:'two',human:true,visible:true,ahead:14};
+ assert.equal(presence.choose([b,a],0),'one');
+ assert.equal(presence.choose([b],10),null);
+ assert.equal(presence.choose([a,b],19),'two');
+ assert.equal(presence.choose([a,b],80),null);
+});
+
+test('Greeting policy yields to pause, conversations, occlusion and passing traffic',()=>{
+ const scope={window:{}};vm.createContext(scope);vm.runInContext(fs.readFileSync(new URL('crew-presence.js',import.meta.url),'utf8'),scope);
+ const presence=scope.window.CrewPresence.create(),a={id:'one',human:true,visible:true,ahead:10};
+ assert.equal(presence.choose([a],0,{paused:true}),null);
+ assert.equal(presence.choose([a],0,{occupied:true}),null);
+ assert.equal(presence.choose([{...a,visible:false}],0),null);
+ assert.equal(presence.choose([{...a,human:false}],0),null);
+ assert.equal(presence.choose([{...a,ahead:-2}],0),null);
+ assert.equal(presence.choose([{...a,ahead:40}],0),null);
+ assert.equal(presence.choose([a],0),'one','Suppressed encounters must not consume a greeting');
 });

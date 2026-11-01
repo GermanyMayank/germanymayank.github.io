@@ -15,8 +15,8 @@ Help hiring managers understand Mayank's verified experience and contact him. Th
 
 ## Animation and accessibility
 - Native scrolling stays responsive. No scroll locks, head bob or forced camera shake.
-- Workers do their jobs continuously. No automatic greetings, popups, floating plus markers or visible crew menus.
-- Reactions happen only after a direct click/tap or deliberate keyboard activation; cool down and resume the task.
+- Workers do their jobs continuously. Per the user's November 2026 request, a visible nearby worker may wave and show one brief greeting per visit, with a global cooldown. No automatic full dialogue cards, audio, floating plus markers or visible crew menus.
+- Full dialogue and escalating reactions happen only after a direct click/tap or deliberate keyboard activation. Proximity greetings must stay short, avoid reading content, yield to clicked conversations and resume the task. Pause and reduced-motion defaults suppress automatic waves and greetings.
 - Preserve reduced-motion support, the pause control, visible keyboard focus and semantic portfolio content.
 - Keep the canvas fallback usable when WebGL or the pinned CDN fails. Pause hidden-tab rendering and cap pixel density. Use shared geometry for repeated elements.
 

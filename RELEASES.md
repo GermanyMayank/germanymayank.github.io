@@ -57,3 +57,14 @@ Recovery: `checkpoint/before-depth-journey-2026-11-01` preserves `0b0f747996ef35
 Replace banner panels with transparent editorial text. Native scroll drives forward farm travel and a reading plane with arrival, a stationary readable interval and departure. Nine concise chapters retain the current CV facts; the full résumé remains available. Remove portfolio signboards; keep the existing working crew, vehicles and direct interactions. Reading view presents the full semantic document. Reduced motion starts with motion paused and reading view active; unsuitable viewport/text sizes use the ordinary document.
 
 Validation: seven local tests pass. The isolated preview was checked on desktop and phone for text fit, transparent surfaces, native scroll, jump links, keyboard navigation, crew activation/Escape and the reduced-motion default. Browser testing caught reading-view chapter drift and viewport chapter drift; both were corrected before homepage release. CI and exact-commit Pages deployment must pass. This is not exhaustive device or performance coverage.
+
+
+## Detailed farm and welcoming crew — November 2026
+
+Recovery: checkpoint/before-detailed-farm-2026-11-01 preserves 44729fae840eaec8ff1e3eac116b9bc9ea2c2a54. Keep the checkpoint unchanged and recover through a new revert commit.
+
+Solar tables now use five individually framed modules, split-cell/busbar texture detail and support rails. Workers have more natural proportions, articulated elbows and knees, gloves, boots, helmet and reflective vest detail. Six additional workers bring the walking crew to twelve, alongside the three vehicle drivers.
+
+The user explicitly requested approach greetings, replacing the earlier click-only greeting preference. A visible nearby worker may wave and show one brief hello per visit, with an 18-second shared cooldown. Greetings avoid reading content, yield to deliberate conversations and are suppressed while paused. Full dialogue remains click/keyboard activated.
+
+Validation: nine local candidate tests passed, including greeting repetition, visibility, pause and conversation priority. The isolated preview passed CI/Pages and desktop browser checks. Verified the visible automatic greeting/wave, detailed panel/worker rendering, fifteen actor controls, keyboard conversation activation and greeting suppression during a clicked conversation. The computer connection ended during phone inspection; phone visual/performance verification is incomplete. Preserve the existing viewport and reduced-motion safeguards. Verify release CI and Pages for the exact merge commit.
